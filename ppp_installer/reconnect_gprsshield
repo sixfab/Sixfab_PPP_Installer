@@ -1,0 +1,28 @@
+#!/bin/sh
+
+gpio -g mode 19 in
+gpio -g mode 26 out
+
+while true; do
+
+	if [ $(gpio -g read 19) = "0" ]; then
+		echo "Power up"
+
+		gpio -g write 26 0
+		gpio -g write 26 1
+		sleep 2
+		gpio -g write 26 0
+		sleep 2
+	else
+		ping -c 1 8.8.8.8
+
+		if [ $? -eq 0 ]; then
+			echo "Connection up, reconnect not required..."
+		else
+			echo "Connection down, reconnecting..."
+			sudo pon
+		fi
+	fi
+
+	sleep 1
+done
