@@ -3,11 +3,11 @@ Repository of Sixfab PPP Installer Tool
 
 Sixfab offers Shields for Raspberry Pi which provides cellular Internet connection anywhere with the availability of mobile network coverage. These shields are:
 
-* Raspberry Pi GSM/GPRS Shield
+* [Raspberry Pi GSM/GPRS Shield](https://www.sixfab.com/product/gsmgprs-shield/)
 
-* Raspberry Pi 3G-4G/LTE Base Shield V2
+* [Raspberry Pi 3G-4G/LTE Base Shield V2](https://www.sixfab.com/product/raspberry-pi-3g-4glte-base-shield-v2/)
 
-* Raspberry Pi Cellular IoT Application Shield
+* [Raspberry Pi Cellular IoT Application Shield](https://www.sixfab.com/product/raspberry-pi-cellular-iot-application-hat/)
 
 
 
