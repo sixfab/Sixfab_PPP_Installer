@@ -19,7 +19,7 @@ while true; do
 		gpio -g write 11 0
 		sleep 2
 	else
-		ping -c 1 8.8.8.8
+		ping -I ppp0 -c 1 8.8.8.8
 
 		if [ $? -eq 0 ]; then
 			echo "Connection up, reconnect not required..."

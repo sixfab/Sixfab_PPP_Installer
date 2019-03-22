@@ -2,7 +2,7 @@
 
 while true; do
 
-	ping -c 1 8.8.8.8
+	ping -I ppp0 -c 1 8.8.8.8
 
 	if [ $? -eq 0 ]; then
 		echo "Connection up, reconnect not required..."
