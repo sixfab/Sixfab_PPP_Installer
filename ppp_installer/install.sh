@@ -19,21 +19,21 @@ case $answer in
 esac
 
 echo "${YELLOW}Downloading setup files${SET}"
-wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/rpiShields/master/ppp_installer/chat-connect -O chat-connect
+wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/chat-connect -O chat-connect
 
 if [ $? -ne 0 ]; then
     echo "${RED}Download failed${SET}"
     exit 1; 
 fi
 
-wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/rpiShields/master/ppp_installer/chat-disconnect -O chat-disconnect
+wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/chat-disconnect -O chat-disconnect
 
 if [ $? -ne 0 ]; then
     echo "${RED}Download failed${SET}"
     exit 1;
 fi
 
-wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/rpiShields/master/ppp_installer/provider -O provider
+wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/provider -O provider
 
 if [ $? -ne 0 ]; then
     echo "${RED}Download failed${SET}"
@@ -100,19 +100,19 @@ do
 	case $answer3 in
 		Y)    echo "${YELLOW}Downloading setup file${SET}"
 			  
-			  wget --no-check-certificate https://raw.githubusercontent.com/sixfab/rpiShields/master/ppp_installer/reconnect_service -O reconnect.service
+			  wget --no-check-certificate https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_service -O reconnect.service
 			  
 			  if [ $answer -eq 1 ]; then
 			  
-				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/rpiShields/master/ppp_installer/reconnect_gprsshield -O reconnect.sh
+				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_gprsshield -O reconnect.sh
 			  
 			  elif [ $answer -eq 2 ]; then 
 			  
-				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/rpiShields/master/ppp_installer/reconnect_baseshield -O reconnect.sh
+				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_baseshield -O reconnect.sh
 				
 			  elif [ $answer -eq 3 ]; then 
 			  
-				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/rpiShields/master/ppp_installer/reconnect_cellulariot -O reconnect.sh
+				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_cellulariot -O reconnect.sh
 			  
 			  fi
 			  
