@@ -1,22 +1,22 @@
 #!/bin/sh
 
-gpio -g mode 23 in	#status
-gpio -g mode 24 out	#powerkey
-gpio -g mode 17 out	#enable
+gpio -g mode 20 in
+gpio -g mode 11 out
+gpio -g mode 26 out
 
-gpio -g write 17 1
+gpio -g write 26 0
 sleep 1
-gpio -g write 17 0
+gpio -g write 26 1
 
 while true; do
 
-	if [ $(gpio -g read 23) = "0" ]; then
+	if [ $(gpio -g read 20) = "1" ]; then
 		echo "Power up"
 
-		gpio -g write 24 0
-		gpio -g write 24 1
+		gpio -g write 11 0
+		gpio -g write 11 1
 		sleep 2
-		gpio -g write 24 0
+		gpio -g write 11 0
 		sleep 2
 	else
 		ping -I ppp0 -c 1 8.8.8.8

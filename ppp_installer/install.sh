@@ -8,17 +8,19 @@ SET='\033[0m'
 echo "${YELLOW}Please choose your Sixfab Shield:${SET}"
 echo "${YELLOW}1: GSM/GPRS Shield${SET}"
 echo "${YELLOW}2: 3G, 4G/LTE Base Shield${SET}"
-echo "${YELLOW}3: Cellular IoT Shield${SET}"
+echo "${YELLOW}3: Cellular IoT App Shield${SET}"
+echo "${YELLOW}4: Cellular IoT HAT${SET}"
 
 read answer
 case $answer in
     1)    echo "${YELLOW}You chose GSM/GPRS Shield${SET}";;
     2)    echo "${YELLOW}You chose Base Shield${SET}";;
-    3)    echo "${YELLOW}You chose Cellular Iot Shield${SET}";;
-    *)    echo "${YELLOW}You did not chose 1, 2 or 3${SET}"; exit 1;
+    3)    echo "${YELLOW}You chose CellularIoT Shield${SET}";;
+    4)    echo "${YELLOW}You chose CellularIoT HAT${SET}";;
+    *)    echo "${YELLOW}You did not chose 1, 2,3 or 4${SET}"; exit 1;
 esac
 
-if [ $answer -eq 3 ]; then
+if [ $answer -eq 3 || $answer -eq 4 ]; then
 	echo "${YELLOW}Please choose LTE Technology:${SET}"
 	echo "${YELLOW}1: GPRS/EDGE${SET}"
 	echo "${YELLOW}2: CATM1${SET}"
@@ -139,8 +141,11 @@ do
 				
 			  elif [ $answer -eq 3 ]; then 
 			  
-				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_cellulariot -O reconnect.sh
+				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_cellulariot_app -O reconnect.sh
 			  
+			  elif [ $answer -eq 4 ]; then 
+			  
+				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_cellulariot -O reconnect.sh
 			  fi
 			  
 			  mv reconnect.sh /usr/src/
