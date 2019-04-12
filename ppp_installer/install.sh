@@ -18,6 +18,21 @@ case $answer in
     *)    echo "${YELLOW}You did not chose 1, 2 or 3${SET}"; exit 1;
 esac
 
+if [ $answer -eq 3 ]; then
+	echo "${YELLOW}Please choose LTE Technology:${SET}"
+	echo "${YELLOW}1: GPRS/EDGE${SET}"
+	echo "${YELLOW}2: CATM1${SET}"
+	echo "${YELLOW}3: NB-IoT${SET}"
+
+	read answer4
+	case $answer4 in
+		1)    echo "${YELLOW}You chose GPRS/EDGE${SET}";;
+		2)    echo "${YELLOW}You chose CATM1${SET}";;
+		3)    echo "${YELLOW}You chose NB-IoT${SET}";;
+		*) 	  echo "${YELLOW}You did not chose 1, 2 or 3${SET}"; exit 1;
+	esac
+fi
+
 echo "${YELLOW}Downloading setup files${SET}"
 wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/chat-connect -O chat-connect
 
@@ -64,7 +79,19 @@ read carrierapn
 echo "${YELLOW}What is your device communication PORT? (ttyS0/ttyUSB3/etc.)${SET}"
 read devicename 
 
+if [ $answer4 -eq 1 ]; then
+
 EXTRA='OK AT+QCFG="band",F,400A0E189F,A0E189F,1\nOK AT+QCFG="nwscanseq",01,1\nOK AT+QCFG="nwscanmode",1,1\nOK AT+QCFG="iotopmode",2,1'
+
+elif [ $answer4 -eq 2 ]; then 
+
+EXTRA='OK AT+QCFG="band",F,400A0E189F,A0E189F,1\nOK AT+QCFG="nwscanseq",02,1\nOK AT+QCFG="nwscanmode",3,1\nOK AT+QCFG="iotopmode",0,1'
+
+elif [ $answer4 -eq 3 ]; then 
+
+EXTRA='OK AT+QCFG="band",F,400A0E189F,A0E189F,1\nOK AT+QCFG="nwscanseq",03,1\nOK AT+QCFG="nwscanmode",3,1\nOK AT+QCFG="iotopmode",1,1'
+
+fi
 
 mkdir -p /etc/chatscripts
 if [ $answer -eq 3 ]; then
