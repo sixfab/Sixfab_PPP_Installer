@@ -10,10 +10,10 @@ gpio -g write 17 0
 
 while true; do
 
-	if [ $(gpio -g read 23) = "0" ]; then
+	if [ $(gpio -g read 23) = "1" ]; then
 		echo "Power up"
 
-		gpio -g write 24 0
+		#gpio -g write 24 0
 		gpio -g write 24 1
 		sleep 2
 		gpio -g write 24 0

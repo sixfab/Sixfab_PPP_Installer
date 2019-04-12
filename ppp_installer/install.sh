@@ -20,7 +20,7 @@ case $answer in
     *)    echo "${YELLOW}You did not chose 1, 2,3 or 4${SET}"; exit 1;
 esac
 
-if [ $answer -eq 3 || $answer -eq 4 ]; then
+if [ $answer -eq 3 ] || [ $answer -eq 4 ];	then
 	echo "${YELLOW}Please choose LTE Technology:${SET}"
 	echo "${YELLOW}1: GPRS/EDGE${SET}"
 	echo "${YELLOW}2: CATM1${SET}"
