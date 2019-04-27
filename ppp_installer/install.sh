@@ -33,6 +33,8 @@ if [ $answer -eq 3 ] || [ $answer -eq 4 ];	then
 		3)    echo "${YELLOW}You chose NB-IoT${SET}";;
 		*) 	  echo "${YELLOW}You did not chose 1, 2 or 3${SET}"; exit 1;
 	esac
+else
+  answer4='0'
 fi
 
 echo "${YELLOW}Downloading setup files${SET}"
@@ -163,5 +165,6 @@ do
 	esac
 done
 
-reboot
+echo Rebooting in 30 seconds - type \'sudo  shutdown -c\' to stop this
+shutdown -r +30
 
