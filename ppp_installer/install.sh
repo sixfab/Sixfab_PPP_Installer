@@ -95,7 +95,7 @@ do
 
         echo "${YELLOW}Enter password${SET}"
         read password
-        sed -i "s/noauth/#noauth\n$username\n$password/" provider
+        sed -i "s/noauth/#noauth\nuser \"$username\"\npassword \"$password\"/" provider
         break 
         done
 
