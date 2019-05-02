@@ -165,6 +165,5 @@ do
 	esac
 done
 
-echo Rebooting in 30 seconds - type \'sudo  shutdown -c\' to stop this
-shutdown -r +30
-
+read -p "Press ENTER key to reboot" ENTER
+reboot
