@@ -110,7 +110,7 @@ echo "${YELLOW}What is your device communication PORT? (ttyS0/ttyUSB3/etc.)${SET
 read devicename 
 
 mkdir -p /etc/chatscripts
-if [ $shield_hat -eq 3 ]; then
+if [ $shield_hat -eq 3 ] || [ $shield_hat -eq 4 ]; then
   sed -i "s/#EXTRA/$EXTRA/" chat-connect
 else
   sed -i "/#EXTRA/d" chat-connect
