@@ -2,7 +2,7 @@
 
 while true; do
 
-	ping -I ppp0 -c 1 8.8.8.8
+	ping -I ppp0 -c 1 8.8.8.8 -s 0
 
 	if [ $? -eq 0 ]; then
 		echo "Connection up, reconnect not required..."
@@ -11,5 +11,5 @@ while true; do
 		sudo pon
 	fi
 
-	sleep 1
+	sleep 10
 done
