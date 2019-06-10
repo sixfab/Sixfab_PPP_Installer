@@ -9,6 +9,7 @@ Sixfab offers Shields for Raspberry Pi which provides cellular Internet connecti
 
 * [Raspberry Pi Cellular IoT Application Shield](https://www.sixfab.com/product/raspberry-pi-cellular-iot-application-hat/)
 
+* [Raspberry Pi Cellular IoT HAT ](https://sixfab.com/product/raspberry-pi-lte-m-nb-iot-egprs-cellular-hat/)
 
 
 Each of these shield can be connected to Internet via PPP(Point to Point Protocol). For this tutorial we have written an script to install and perform required steps.
@@ -31,9 +32,9 @@ Now install the script
 `sudo ./install.sh`
   
 It will ask several questions, just answer them accordingly to complete the installation process. The questions are:
-`Please choose your Sixfab Shield`
-
-You will be offered to choose among the mentioned three shields. Then it will fetch required scripts for you. 
+`Please choose your Sixfab Shield/HAT`
+ 
+You will be offered to choose among the mentioned four shields/HAT. Then it will fetch required scripts for you. 
 `Do you have updated kernel`
 
 It asks if your kernel is up-to-date. If no[n] it updates the kernel else it skips the update. Then it installs ppp. 
@@ -41,6 +42,16 @@ It asks if your kernel is up-to-date. If no[n] it updates the kernel else it ski
 `What is your carrier APN?`
 
 Here, it asks for your carrier's APN. For me it is hologram. 
+
+`Does your carrier need username and password? [Y/n]`
+
+Then it asks if your carrier needs username and password. 
+
+`Enter username`
+If yes then it will ask for user name.
+
+
+Once you type the username asks for password.
 
 `Enter your PORT name`
 
