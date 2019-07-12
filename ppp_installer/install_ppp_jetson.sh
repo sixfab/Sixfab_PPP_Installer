@@ -1,5 +1,7 @@
 #!/bin/sh
-
+:'
+Created on July 12, 2019 by Saeed Johar (saeedjohar)
+'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
 BLUE='\033[1;34m'
@@ -60,21 +62,6 @@ if [ $? -ne 0 ]; then
     exit 1;
 fi
 
-while [ 1 ]
-do
-	echo "${YELLOW}Do you have updated kernel? [Y/n] ${SET}"
-	read kernelUpdate
-	
-	case $kernelUpdate in
-		[Yy]* )  break;;
-		
-		[Nn]* )  echo "${YELLOW}rpi-update${SET}"
-			rpi-update
-		    break;;
-		*)  echo "${RED}Wrong Selection, Select among Y or n${SET}";;
-	esac
-done
-
 echo "${YELLOW}ppp install${SET}"
 apt-get install ppp
 
@@ -127,12 +114,6 @@ mv provider /etc/ppp/peers/provider
 if ! (grep -q 'route' /etc/ppp/ip-up ); then
     echo "sudo route del default" >> /etc/ppp/ip-up
     echo "sudo route add default ppp0" >> /etc/ppp/ip-up
-fi
-
-if [ $shield_hat -eq 2 ]; then
-	if ! (grep -q 'max_usb_current' /boot/config.txt ); then
-		echo "max_usb_current=1" >> /boot/config.txt
-	fi
 fi
 
 while [ 1 ]
