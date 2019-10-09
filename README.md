@@ -1,7 +1,7 @@
 # Sixfab_PPP_Installer
 Repository of Sixfab PPP Installer Tool 
 
-Sixfab offers Shields for Raspberry Pi which provides cellular Internet connection anywhere with the availability of mobile network coverage. These shields are:
+Sixfab offers Shields/HATs for Raspberry Pi which provides cellular Internet connection anywhere with the availability of mobile network coverage. These shields are:
 
 * [Raspberry Pi GSM/GPRS Shield](https://www.sixfab.com/product/gsmgprs-shield/)
 
@@ -9,8 +9,9 @@ Sixfab offers Shields for Raspberry Pi which provides cellular Internet connecti
 
 * [Raspberry Pi Cellular IoT Application Shield](https://www.sixfab.com/product/raspberry-pi-cellular-iot-application-hat/)
 
-* [Raspberry Pi Cellular IoT HAT ](https://sixfab.com/product/raspberry-pi-lte-m-nb-iot-egprs-cellular-hat/)
+* [Raspberry Pi Cellular IoT HAT ](https://sixfab.com/product/raspberry-pi-lte-m-nb-iot-egprs-cellular-hat/) 
 
+* [Raspberry Pi Tracker HAT ](https://sixfab.com/product/raspberry-pi-gprs-gps-tracker-hat/)
 
 Each of these shield can be connected to Internet via PPP(Point to Point Protocol). For this tutorial we have written an script to install and perform required steps.
 
@@ -50,12 +51,14 @@ Then it asks if your carrier needs username and password.
 `Enter username`
 If yes then it will ask for user name.
 
+`Enter password`
+Then it will ask for password.
 
 Once you type the username asks for password.
 
-`Enter your PORT name`
+`What is your device communication PORT? (ttyS0/ttyUSB3/etc.`
 
-In this step you will enter your PORT. For 3G, 4G/LTE Base Shield it will be ttyUSB3. 
+In this step you will enter your PORT. e.g For 3G, 4G/LTE Base Shield it will be ttyUSB3. 
 
 `Do you want to activate auto connect/reconnect service at R.Pi boot up?`
 
