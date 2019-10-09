@@ -10,6 +10,7 @@ echo "${YELLOW}1: GSM/GPRS Shield${SET}"
 echo "${YELLOW}2: 3G, 4G/LTE Base Shield${SET}"
 echo "${YELLOW}3: Cellular IoT App Shield${SET}"
 echo "${YELLOW}4: Cellular IoT HAT${SET}"
+echo "${YELLOW}5: Tracker HAT${SET}"
 
 read shield_hat
 case $shield_hat in
@@ -17,6 +18,7 @@ case $shield_hat in
     2)    echo "${YELLOW}You chose Base Shield${SET}";;
     3)    echo "${YELLOW}You chose CellularIoT Shield${SET}";;
     4)    echo "${YELLOW}You chose CellularIoT HAT${SET}";;
+	5)    echo "${YELLOW}You chose Tracker HAT${SET}";;		
     *)    echo "${RED}Wrong Selection, exiting${SET}"; exit 1;
 esac
 
@@ -59,7 +61,7 @@ if [ $? -ne 0 ]; then
     echo "${RED}Download failed${SET}"
     exit 1;
 fi
-
+:'
 while [ 1 ]
 do
 	echo "${YELLOW}Do you have updated kernel? [Y/n] ${SET}"
@@ -74,7 +76,7 @@ do
 		*)  echo "${RED}Wrong Selection, Select among Y or n${SET}";;
 	esac
 done
-
+'
 echo "${YELLOW}ppp install${SET}"
 apt-get install ppp
 
@@ -143,23 +145,28 @@ do
 	case $auto_reconnect in
 		[Yy]* )    echo "${YELLOW}Downloading setup file${SET}"
 			  
-			  wget --no-check-certificate https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_service -O reconnect.service
+			wget --no-check-certificate https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_service -O reconnect.service
 			  
-			  if [ $shield_hat -eq 1 ]; then
+			if [ $shield_hat -eq 1 ]; then
 			  
 				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_gprsshield -O reconnect.sh
 			  
-			  elif [ $shield_hat -eq 2 ]; then 
+			elif [ $shield_hat -eq 2 ]; then 
 			  
 				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_baseshield -O reconnect.sh
 				
-			  elif [ $shield_hat -eq 3 ]; then 
+			elif [ $shield_hat -eq 3 ]; then 
 			  
 				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_cellulariot_app -O reconnect.sh
 			  
-			  elif [ $shield_hat -eq 4 ]; then 
+			elif [ $shield_hat -eq 4 ]; then 
 			  
 				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_cellulariot -O reconnect.sh
+			
+			elif [ $shield_hat -eq 5 ]; then 
+			  
+				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_tracker -O reconnect.sh
+
 			  fi
 			  
 			  mv reconnect.sh /usr/src/
