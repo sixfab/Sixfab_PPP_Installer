@@ -11,6 +11,8 @@ echo "${YELLOW}2: 3G, 4G/LTE Base Shield${SET}"
 echo "${YELLOW}3: Cellular IoT App Shield${SET}"
 echo "${YELLOW}4: Cellular IoT HAT${SET}"
 echo "${YELLOW}5: Tracker HAT${SET}"
+echo "${YELLOW}6: 3G/4G Base HAT${SET}"
+
 
 read shield_hat
 case $shield_hat in
@@ -18,7 +20,8 @@ case $shield_hat in
     2)    echo "${YELLOW}You chose Base Shield${SET}";;
     3)    echo "${YELLOW}You chose CellularIoT Shield${SET}";;
     4)    echo "${YELLOW}You chose CellularIoT HAT${SET}";;
-	5)    echo "${YELLOW}You chose Tracker HAT${SET}";;		
+	5)    echo "${YELLOW}You chose Tracker HAT${SET}";;
+	6)    echo "${YELLOW}You chose 3G/4G Base HAT${SET}";;		
     *)    echo "${RED}Wrong Selection, exiting${SET}"; exit 1;
 esac
 
@@ -167,11 +170,14 @@ do
 			  
 				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_tracker -O reconnect.sh
 
+			elif [ $shield_hat -eq 6 ]; then 
+			  
+				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_basehat -O reconnect.sh
+
 			  fi
 			  
 			  mv reconnect.sh /usr/src/
 			  mv reconnect.service /etc/systemd/system/
-			  
 			  
 			  systemctl daemon-reload
 			  systemctl enable reconnect.service
