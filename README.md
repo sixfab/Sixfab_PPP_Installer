@@ -13,6 +13,8 @@ Sixfab offers Shields/HATs for Raspberry Pi which provides cellular Internet con
 
 * [Raspberry Pi Tracker HAT ](https://sixfab.com/product/raspberry-pi-gprs-gps-tracker-hat/)
 
+* [Raspberry Pi 3G/4G&LTE Base HAT](https://sixfab.com/product/raspberry-pi-base-hat-3g-4g-lte-minipcie-cards/)
+
 Each of these shield can be connected to Internet via PPP(Point to Point Protocol). For this tutorial we have written an script to install and perform required steps.
 
 Without further ado let us jump into the installation process:
@@ -36,9 +38,8 @@ It will ask several questions, just answer them accordingly to complete the inst
 `Please choose your Sixfab Shield/HAT`
  
 You will be offered to choose among the mentioned four shields/HAT. Then it will fetch required scripts for you. 
-`Do you have updated kernel`
 
-It asks if your kernel is up-to-date. If no[n] it updates the kernel else it skips the update. Then it installs ppp. 
+Then it installs ppp. 
 
 `What is your carrier APN?`
 
