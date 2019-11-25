@@ -64,7 +64,7 @@ if [ $? -ne 0 ]; then
     echo "${RED}Download failed${SET}"
     exit 1;
 fi
-:'
+'
 while [ 1 ]
 do
 	echo "${YELLOW}Do you have updated kernel? [Y/n] ${SET}"
