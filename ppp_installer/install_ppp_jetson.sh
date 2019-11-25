@@ -1,5 +1,5 @@
 #!/bin/sh
-:'
+'
 Created on July 12, 2019 by Saeed Johar (saeedjohar)
 '
 YELLOW='\033[1;33m'
