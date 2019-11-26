@@ -64,22 +64,22 @@ if [ $? -ne 0 ]; then
     echo "${RED}Download failed${SET}"
     exit 1;
 fi
-'
-while [ 1 ]
-do
-	echo "${YELLOW}Do you have updated kernel? [Y/n] ${SET}"
-	read kernelUpdate
+#' # not required an more.
+#while [ 1 ]
+#do
+#	echo "${YELLOW}Do you have updated kernel? [Y/n] ${SET}"
+#	read kernelUpdate
 	
-	case $kernelUpdate in
-		[Yy]* )  break;;
+#	case $kernelUpdate in
+#		[Yy]* )  break;;
 		
-		[Nn]* )  echo "${YELLOW}rpi-update${SET}"
-			rpi-update
-		    break;;
-		*)  echo "${RED}Wrong Selection, Select among Y or n${SET}";;
-	esac
-done
-'
+#		[Nn]* )  echo "${YELLOW}rpi-update${SET}"
+#			rpi-update
+#		    break;;
+#		*)  echo "${RED}Wrong Selection, Select among Y or n${SET}";;
+#	esac
+#done
+#'
 echo "${YELLOW}ppp install${SET}"
 apt-get install ppp
 
