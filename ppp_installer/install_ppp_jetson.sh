@@ -12,6 +12,8 @@ echo "${YELLOW}1: GSM/GPRS Shield${SET}"
 echo "${YELLOW}2: 3G, 4G/LTE Base Shield${SET}"
 echo "${YELLOW}3: Cellular IoT App Shield${SET}"
 echo "${YELLOW}4: Cellular IoT HAT${SET}"
+echo "${YELLOW}5: Tracker HAT${SET}"
+echo "${YELLOW}6: 3G/4G Base HAT${SET}"
 
 read shield_hat
 case $shield_hat in
@@ -19,6 +21,8 @@ case $shield_hat in
     2)    echo "${YELLOW}You chose Base Shield${SET}";;
     3)    echo "${YELLOW}You chose CellularIoT Shield${SET}";;
     4)    echo "${YELLOW}You chose CellularIoT HAT${SET}";;
+	5)    echo "${YELLOW}You chose Tracker HAT${SET}";;
+	6)    echo "${YELLOW}You chose 3G/4G Base HAT${SET}";;
     *)    echo "${RED}Wrong Selection, exiting${SET}"; exit 1;
 esac
 
@@ -111,7 +115,7 @@ sed -i "s/#APN/$carrierapn/" provider
 sed -i "s/#DEVICE/$devicename/" provider
 mv provider /etc/ppp/peers/provider
 
-if ! (grep -q 'route' /etc/ppp/ip-up ); then
+if ! (grep -q 'sudo route' /etc/ppp/ip-up ); then
     echo "sudo route del default" >> /etc/ppp/ip-up
     echo "sudo route add default ppp0" >> /etc/ppp/ip-up
 fi
