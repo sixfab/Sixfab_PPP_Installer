@@ -80,8 +80,8 @@ fi
 #	esac
 #done
 #'
-echo "${YELLOW}ppp install${SET}"
-apt-get install ppp
+echo "${YELLOW}ppp and wiringpi (gpio tool) install${SET}"
+apt-get install ppp wiringpi
 
 echo "${YELLOW}What is your carrier APN?${SET}"
 read carrierapn 
