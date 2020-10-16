@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "${YELLOW}ppp and wiringpi (gpio tool) install${SET}"
-apt install ppp wiringpi
+apt install ppp wiringpi -y
 
 mkdir -p /etc/chatscripts
 sed -i "/#EXTRA/d" chat-connect
