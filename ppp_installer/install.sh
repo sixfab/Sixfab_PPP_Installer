@@ -64,22 +64,7 @@ if [ $? -ne 0 ]; then
     echo "${RED}Download failed${SET}"
     exit 1;
 fi
-#' # not required an more.
-#while [ 1 ]
-#do
-#	echo "${YELLOW}Do you have updated kernel? [Y/n] ${SET}"
-#	read kernelUpdate
-	
-#	case $kernelUpdate in
-#		[Yy]* )  break;;
-		
-#		[Nn]* )  echo "${YELLOW}rpi-update${SET}"
-#			rpi-update
-#		    break;;
-#		*)  echo "${RED}Wrong Selection, Select among Y or n${SET}";;
-#	esac
-#done
-#'
+
 echo "${YELLOW}ppp and wiringpi (gpio tool) install${SET}"
 apt-get install ppp wiringpi
 
@@ -115,11 +100,8 @@ echo "${YELLOW}What is your device communication PORT? (ttyS0/ttyUSB3/etc.)${SET
 read devicename 
 
 mkdir -p /etc/chatscripts
-if [ $shield_hat -eq 3 ] || [ $shield_hat -eq 4 ]; then
-  sed -i "s/#EXTRA/$EXTRA/" chat-connect
-else
-  sed -i "/#EXTRA/d" chat-connect
-fi
+
+sed -i "/#EXTRA/d" chat-connect
 
 mv chat-connect /etc/chatscripts/
 mv chat-disconnect /etc/chatscripts/
