@@ -8,6 +8,7 @@ disconnect 'chat -s -v -f /etc/chatscripts/chat-disconnect'
 hide-password
 # The phone is not required to authenticate
 noauth
+persist
 # Debug info from pppd
 debug
 # If you want to use the HSDPA link as your gateway
