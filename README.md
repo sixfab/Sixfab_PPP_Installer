@@ -66,3 +66,7 @@ In this step you will enter your PORT. e.g For 3G, 4G/LTE Base Shield it will be
 This option allows you to connect to Internet via your shield automatically when your Raspberry Pi Starts. If you want to connect to Internet automatically type Y else n. If you have selected n then you will need to run `sudo pon` to connect to internet and `sudo poff` to stop it. 
 
 Enjoy your Internet connection.
+
+Important Links: 
+* [Linux PPP HOW TO](https://tldp.org/HOWTO/PPP-HOWTO/index.html)
+* [PAP CHAP authentications](https://tldp.org/HOWTO/PPP-HOWTO/pap.html)

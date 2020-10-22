@@ -33,7 +33,6 @@ echo "${YELLOW}ppp and wiringpi (gpio tool) install${SET}"
 apt install ppp wiringpi -y
 
 mkdir -p /etc/chatscripts
-sed -i "/#EXTRA/d" chat-connect
 
 mv chat-connect /etc/chatscripts/
 mv chat-disconnect /etc/chatscripts/

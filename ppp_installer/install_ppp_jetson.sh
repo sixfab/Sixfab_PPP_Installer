@@ -49,7 +49,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "${YELLOW}ppp install${SET}"
-apt-get install ppp
+apt-get install ppp -y
 
 echo "${YELLOW}What is your carrier APN?${SET}"
 read carrierapn 
@@ -83,7 +83,6 @@ echo "${YELLOW}What is your device communication PORT? (ttyS0/ttyUSB3/etc.)${SET
 read devicename 
 
 mkdir -p /etc/chatscripts
-sed -i "/#EXTRA/d" chat-connect
 
 mv chat-connect /etc/chatscripts/
 mv chat-disconnect /etc/chatscripts/

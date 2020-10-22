@@ -25,24 +25,6 @@ case $shield_hat in
     *)    echo "${RED}Wrong Selection, exiting${SET}"; exit 1;
 esac
 
-if [ $shield_hat -eq 3 ] || [ $shield_hat -eq 4 ];	then
-	echo "${YELLOW}Please choose LTE Technology:${SET}"
-	echo "${YELLOW}1: GPRS/EDGE${SET}"
-	echo "${YELLOW}2: CATM1${SET}"
-	echo "${YELLOW}3: NB-IoT${SET}"
-
-	read network_technology
-	case $network_technology in
-		1)    echo "${YELLOW}You chose GPRS/EDGE${SET}"
-				EXTRA='OK AT+QCFG="band",F,400A0E189F,A0E189F,1\nOK AT+QCFG="nwscanseq",01,1\nOK AT+QCFG="nwscanmode",1,1\nOK AT+QCFG="iotopmode",2,1';;
-		2)    echo "${YELLOW}You chose CATM1${SET}"
-				EXTRA='OK AT+QCFG="band",F,400A0E189F,A0E189F,1\nOK AT+QCFG="nwscanseq",02,1\nOK AT+QCFG="nwscanmode",3,1\nOK AT+QCFG="iotopmode",0,1';;
-		3)    echo "${YELLOW}You chose NB-IoT${SET}"
-				EXTRA='OK AT+QCFG="band",F,400A0E189F,A0E189F,1\nOK AT+QCFG="nwscanseq",03,1\nOK AT+QCFG="nwscanmode",3,1\nOK AT+QCFG="iotopmode",1,1';;
-		*) 	  echo "{RED}Wrong Selection, exiting${SET}"; exit 1;
-	esac
-fi
-
 echo "${YELLOW}Downloading setup files${SET}"
 wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/chat-connect -O chat-connect
 
@@ -66,7 +48,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "${YELLOW}ppp and wiringpi (gpio tool) install${SET}"
-apt-get install ppp wiringpi
+apt install ppp wiringpi -y
 
 echo "${YELLOW}What is your carrier APN?${SET}"
 read carrierapn 
@@ -100,8 +82,6 @@ echo "${YELLOW}What is your device communication PORT? (ttyS0/ttyUSB3/etc.)${SET
 read devicename 
 
 mkdir -p /etc/chatscripts
-
-sed -i "/#EXTRA/d" chat-connect
 
 mv chat-connect /etc/chatscripts/
 mv chat-disconnect /etc/chatscripts/
