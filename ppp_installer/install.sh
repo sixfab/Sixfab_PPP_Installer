@@ -1,71 +1,78 @@
-#!/bin/sh
+#!/bin/bash
 
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
 BLUE='\033[1;34m'
 SET='\033[0m'
 
-echo "${YELLOW}Please choose your Sixfab Shield/HAT:${SET}"
-echo "${YELLOW}1: GSM/GPRS Shield${SET}"
-echo "${YELLOW}2: 3G, 4G/LTE Base Shield${SET}"
-echo "${YELLOW}3: Cellular IoT App Shield${SET}"
-echo "${YELLOW}4: Cellular IoT HAT${SET}"
-echo "${YELLOW}5: Tracker HAT${SET}"
-echo "${YELLOW}6: 3G/4G Base HAT${SET}"
+function colored_echo
+{
+	COLOR=${2:-$YELLOW}
+	echo -e "$COLOR $1 ${SET}"
+}
+
+
+colored_echo "Please choose your Sixfab Shield/HAT:"
+colored_echo "1: GSM/GPRS Shield"
+colored_echo "2: 3G, 4G/LTE Base Shield"
+colored_echo "3: Cellular IoT App Shield"
+colored_echo "4: Cellular IoT HAT"
+colored_echo "5: Tracker HAT"
+colored_echo "6: 3G/4G Base HAT"
 
 
 read shield_hat
 case $shield_hat in
-    1)    echo "${YELLOW}You chose GSM/GPRS Shield${SET}";;
-    2)    echo "${YELLOW}You chose Base Shield${SET}";;
-    3)    echo "${YELLOW}You chose CellularIoT Shield${SET}";;
-    4)    echo "${YELLOW}You chose CellularIoT HAT${SET}";;
-	5)    echo "${YELLOW}You chose Tracker HAT${SET}";;
-	6)    echo "${YELLOW}You chose 3G/4G Base HAT${SET}";;		
-    *)    echo "${RED}Wrong Selection, exiting${SET}"; exit 1;
+    1)    colored_echo "You chose GSM/GPRS Shield";;
+    2)    colored_echo "You chose Base Shield";;
+    3)    colored_echo "You chose CellularIoT Shield";;
+    4)    colored_echo "You chose CellularIoT HAT";;
+	5)    colored_echo "You chose Tracker HAT";;
+	6)    colored_echo "You chose 3G/4G Base HAT";;		
+    *)    colored_echo "Wrong Selection, exiting" ${RED}; exit 1;
 esac
 
-echo "${YELLOW}Downloading setup files${SET}"
+colored_echo "Downloading setup files..."
 wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/chat-connect -O chat-connect
 
 if [ $? -ne 0 ]; then
-    echo "${RED}Download failed${SET}"
+    colored_echo "Download failed" ${RED}
     exit 1; 
 fi
 
 wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/chat-disconnect -O chat-disconnect
 
 if [ $? -ne 0 ]; then
-    echo "${RED}Download failed${SET}"
-    exit 1;
+    colored_echo "Download failed" ${RED}
+    exit 1; 
 fi
 
 wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/provider -O provider
 
 if [ $? -ne 0 ]; then
-    echo "${RED}Download failed${SET}"
-    exit 1;
+    colored_echo "Download failed" ${RED}
+    exit 1; 
 fi
 
-echo "${YELLOW}ppp and wiringpi (gpio tool) install${SET}"
-apt install ppp wiringpi -y
+colored_echo "ppp and wiringpi (gpio tool) installing..."
+apt-get install ppp wiringpi -y
 
-echo "${YELLOW}What is your carrier APN?${SET}"
+colored_echo "What is your carrier APN?"
 read carrierapn 
 
 while [ 1 ]
 do
-	echo "${YELLOW}Does your carrier need username and password? [Y/n]${SET}"
+	colored_echo "Does your carrier need username and password? [Y/n]"
 	read usernpass
 	
 	case $usernpass in
 		[Yy]* )  while [ 1 ] 
         do 
         
-        echo "${YELLOW}Enter username${SET}"
+        colored_echo "Enter username"
         read username
 
-        echo "${YELLOW}Enter password${SET}"
+        colored_echo "Enter password"
         read password
         sed -i "s/noauth/#noauth\nuser \"$username\"\npassword \"$password\"/" provider
         break 
@@ -74,11 +81,11 @@ do
         break;;
 		
 		[Nn]* )  break;;
-		*)  echo "${RED}Wrong Selection, Select among Y or n${SET}";;
+		*)  colored_echo "Wrong Selection, Select among Y or n" ${RED};;
 	esac
 done
 
-echo "${YELLOW}What is your device communication PORT? (ttyS0/ttyUSB3/etc.)${SET}"
+colored_echo "What is your device communication PORT? (ttyS0/ttyUSB3/etc.)"
 read devicename 
 
 mkdir -p /etc/chatscripts
@@ -103,11 +110,11 @@ fi
 
 while [ 1 ]
 do
-	echo "${YELLOW}Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n] ${SET}"
+	colored_echo "Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]"
 	read auto_reconnect
 
 	case $auto_reconnect in
-		[Yy]* )    echo "${YELLOW}Downloading setup file${SET}"
+		[Yy]* )    colored_echo "Downloading setup file..."
 			  
 			wget --no-check-certificate https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/reconnect_service -O reconnect.service
 			  
@@ -145,9 +152,9 @@ do
 			  
 			  break;;
 			  
-		[Nn]* )    echo "${YELLOW}To connect to internet run ${BLUE}\"sudo pon\"${YELLOW} and to disconnect run ${BLUE}\"sudo poff\" ${SET}"
+		[Nn]* )    echo -e "${YELLOW}To connect to internet run ${BLUE}\"sudo pon\"${YELLOW} and to disconnect run ${BLUE}\"sudo poff\" ${SET}"
 			  break;;
-		*)   echo "${RED}Wrong Selection, Select among Y or n${SET}";;
+		*)   colored_echo "Wrong Selection, Select among Y or n" ${RED};;
 	esac
 done
 
