@@ -1,48 +1,8 @@
 #!/bin/env bash
 
-INTERVAL=60
-DOUBLE_CHECK_WAIT=10
-PING_TIMEOUT=9
+source functions.sh
+source configs.sh
 
-function debug()
-{
-    echo $(date "+%Y/%m/%d - %H:%M:%S :") "$1"
-}
-
-function check_network()
-{
-    # Check the network is ready
-    debug "Checking the network is ready..."
-
-    for i in {1..600}; do
-        NETWORK_OK=0
-
-        debug "SIM Status:"
-        atcom AT+CPIN? OK ERROR 10 | grep "CPIN: READY"
-        SIM_READY=$?
-
-        debug "Network Registeration Status:"
-        # For super SIM
-        atcom AT+CREG? OK ERROR 10 | grep "CREG: 0,5"
-        NETWORK_REG=$?
-        # For native SIM
-        atcom AT+CREG? OK ERROR 10 | grep "CREG: 0,1"
-        NETWORK_REG_2=$?
-        # Combined network registeration status
-        NETWORK_REG=$((NETWORK_REG+NETWORK_REG_2))
-
-        if [[ $SIM_READY -eq 0 ]] && [[ $NETWORK_REG -le 1 ]]; then
-            debug "Network is ready."
-            NETWORK_OK=1
-            return 0
-            break
-        else
-            printf "?"
-        fi
-        sleep 2
-    done
-    return 1
-}
 
 if check_network -eq 0; then 
     debug "PPP chatscript is starting...";
