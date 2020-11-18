@@ -8,7 +8,6 @@ WorkingDirectory=/opt/sixfab/ppp_connection_manager
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
-User=pi
 
 [Install]
 WantedBy=multi-user.target
