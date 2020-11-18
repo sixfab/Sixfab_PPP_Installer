@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/bash
 
 source functions.sh
 source configs.sh
