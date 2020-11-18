@@ -1,17 +1,41 @@
 #!/bin/bash
 
+REPO=revision
+SIXFAB_PATH="/opt/sixfab"
+PPP_PATH="/opt/sixfab/ppp_connection_manager"
+
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
 BLUE='\033[1;34m'
 SET='\033[0m'
 
-REPO=revision
+function debug()
+{
+    echo $(date "+%Y/%m/%d - %H:%M:%S :") "$1"
+}
 
 function colored_echo
 {
 	COLOR=${2:-$YELLOW}
 	echo -e "$COLOR $1 ${SET}"
 }
+
+
+# Check Sixfab path 
+if [[ -e $SIXFAB_PATH ]]; then
+    debug "Path already exist!"
+else
+    sudo mkdir $SIXFAB_PATH
+    debug "Sixfab path is created."
+fi
+
+# Check PPP path 
+if [[ -e $PPP_PATH ]]; then
+    debug "Path already exist!"
+else
+    sudo mkdir $PPP_PATH
+    debug "PPP path is created."
+fi
 
 
 colored_echo "Please choose your Sixfab Shield/HAT:"
@@ -119,7 +143,10 @@ do
 		[Yy]* )    colored_echo "Downloading setup file..."
 			  
 			wget --no-check-certificate https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/$REPO/ppp_installer/reconnect_service -O reconnect.service
-			  
+			wget --no-check-certificate https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/$REPO/ppp_installer/functions.sh
+			wget --no-check-certificate https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/$REPO/ppp_installer/configs.sh
+
+
 			if [ $shield_hat -eq 1 ]; then
 			  
 				wget --no-check-certificate  https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/$REPO/ppp_installer/reconnect_gprsshield -O reconnect.sh
@@ -146,7 +173,9 @@ do
 
 			  fi
 			  
-			  mv reconnect.sh /usr/src/
+			  mv reconnect.sh $PPP_PATH
+			  mv functions.sh $PPP_PATH
+			  mv configs.sh $PPP_PATH
 			  mv reconnect.service /etc/systemd/system/
 			  
 			  systemctl daemon-reload

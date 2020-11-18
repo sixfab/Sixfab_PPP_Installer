@@ -3,8 +3,8 @@ Description=PPP Auto Connection
 After=network.target
 
 [Service]
-ExecStart=/bin/sh /usr/src/reconnect.sh
-WorkingDirectory=/usr/src/
+ExecStart=/bin/bash reconnect.sh
+WorkingDirectory=/opt/sixfab/ppp_connection_manager
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
