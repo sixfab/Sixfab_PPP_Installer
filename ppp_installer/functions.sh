@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+source configs.sh
+
 function debug()
 {
     echo $(date "+%Y/%m/%d - %H:%M:%S :") "$1"
@@ -7,12 +9,10 @@ function debug()
 
 function check_network()
 {   
-    NETWORK_TIMEOUT=300     # Check network for ($NETWORK_TIMEOUT x 2 Seconds)     
-
     # Check the network is ready
     debug "Checking the network is ready..."
 
-    for i in {1..$NETWORK_TIMEOUT}; do
+    for i in {1..$NETWORK_CHECK_TIMEOUT}; do
         NETWORK_OK=0
 
         debug "SIM Status:"
