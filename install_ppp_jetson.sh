@@ -64,25 +64,13 @@ esac
 
 colored_echo "Downloading setup files..."
 wget --no-check-certificate  $SOURCE_PATH/chat-connect -O chat-connect
-
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 wget --no-check-certificate  $SOURCE_PATH/chat-disconnect -O chat-disconnect
-
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 wget --no-check-certificate  $SOURCE_PATH/provider -O provider
-
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 colored_echo "ppp installing"
 apt-get install ppp -y

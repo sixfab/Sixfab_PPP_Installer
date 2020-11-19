@@ -62,26 +62,15 @@ case $shield_hat in
 esac
 
 colored_echo "Downloading setup files..."
-wget --no-check-certificate  $SOURCE_PATH/chat-connect -O chat-connect
 
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+wget --no-check-certificate  $SOURCE_PATH/chat-connect -O chat-connect
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 wget --no-check-certificate  $SOURCE_PATH/chat-disconnect -O chat-disconnect
-
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 wget --no-check-certificate  $SOURCE_PATH/provider -O provider
-
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 colored_echo "ppp and wiringpi (gpio tool) installing..."
 apt-get install ppp wiringpi -y
@@ -146,35 +135,50 @@ do
 		[Yy]* )    colored_echo "Downloading setup file..."
 			  
 			wget --no-check-certificate $SOURCE_PATH/$SERVICE_NAME
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SOURCE_PATH/functions.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SOURCE_PATH/configs.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SOURCE_PATH/configure_modem.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SOURCE_PATH/$MANAGER_SCRIPT_NAME
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 
 			if [ $shield_hat -eq 1 ]; then
 			  
 				wget --no-check-certificate  $SCRIPT_PATH/reconnect_gprsshield -O $RECONNECT_SCRIPT_NAME
+				if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 			  
 			elif [ $shield_hat -eq 2 ]; then 
 			  
 				wget --no-check-certificate   $SCRIPT_PATH/reconnect_baseshield -O $RECONNECT_SCRIPT_NAME
+				if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 				
 			elif [ $shield_hat -eq 3 ]; then 
 			  
 				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot_app -O $RECONNECT_SCRIPT_NAME
+				if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 			  
 			elif [ $shield_hat -eq 4 ]; then 
 			  
 				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot -O $RECONNECT_SCRIPT_NAME
+				if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 			
 			elif [ $shield_hat -eq 5 ]; then 
 			  
 				wget --no-check-certificate   $SCRIPT_PATH/reconnect_tracker -O $RECONNECT_SCRIPT_NAME
+				if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 			elif [ $shield_hat -eq 6 ]; then 
 			  
 				wget --no-check-certificate   $SCRIPT_PATH/reconnect_basehat -O $RECONNECT_SCRIPT_NAME
+				if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 			fi
 			  

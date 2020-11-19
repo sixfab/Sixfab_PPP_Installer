@@ -44,25 +44,13 @@ colored_echo "Installing PPP for Sixfab Cellular IoT Shield/HAT with Twilio Supe
 
 colored_echo "Downloading setup files..."
 wget --no-check-certificate  $SOURCE_PATH/chat-connect -O chat-connect
-
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 wget --no-check-certificate  $SOURCE_PATH/chat-disconnect -O chat-disconnect
-
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 wget --no-check-certificate  $SOURCE_PATH/provider -O provider
-
-if [ $? -ne 0 ]; then
-    colored_echo "Download failed" ${RED}
-    exit 1; 
-fi
+if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 colored_echo "ppp and wiringpi (gpio tool) installing..."
 apt-get install ppp wiringpi -y
@@ -90,11 +78,22 @@ do
 		[Yy]* )    colored_echo "Downloading setup file..."
 			  
 			wget --no-check-certificate $SOURCE_PATH/$SERVICE_NAME
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SOURCE_PATH/functions.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SOURCE_PATH/configs.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SOURCE_PATH/configure_modem.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SOURCE_PATH/$MANAGER_SCRIPT_NAME
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
 			wget --no-check-certificate $SCRIPT_PATH/reconnect_cellulariot -O $RECONNECT_SCRIPT_NAME
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 			mv functions.sh $PPP_PATH
 			mv configs.sh $PPP_PATH
