@@ -24,7 +24,7 @@ for i in {1..120}; do
 done
 
 if [[ $MODEM_CONFIG -eq 0 ]]; then
-    bash ./reconnect_scripts/reconnect_baseshield |& sudo tee -a ./logs/$LOG_FILE_NAME.log
+    bash ppp_reconnect.sh |& sudo tee -a ./logs/$LOG_FILE_NAME.log
 else
     debug "Modem configuration is failed multiple times!" 
     debug "Checkout other troubleshooting step on docs.sixfab.com."

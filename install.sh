@@ -7,7 +7,8 @@ REPO_PATH="https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer"
 BRANCH=revision
 SOURCE_PATH="$REPO_PATH/$BRANCH/src"
 SCRIPT_PATH="$REPO_PATH/$BRANCH/src/reconnect_scripts"
-SCRIPT_NAME="ppp_reconnect.sh"
+RECONNECT_SCRIPT_NAME="ppp_reconnect.sh"
+MANAGER_SCRIPT_NAME="ppp_connection_manager.sh"
 SERVICE_NAME="ppp_connection_manager.service"
 
 YELLOW='\033[1;33m'
@@ -151,37 +152,41 @@ do
 			wget --no-check-certificate $SOURCE_PATH/$SERVICE_NAME
 			wget --no-check-certificate $SOURCE_PATH/functions.sh
 			wget --no-check-certificate $SOURCE_PATH/configs.sh
+			wget --no-check-certificate $SOURCE_PATH/configure_modem.sh
+			wget --no-check-certificate $SOURCE_PATH/$MANAGER_SCRIPT_NAME
 
 
 			if [ $shield_hat -eq 1 ]; then
 			  
-				wget --no-check-certificate  $SCRIPT_PATH/reconnect_gprsshield -O $SCRIPT_NAME
+				wget --no-check-certificate  $SCRIPT_PATH/reconnect_gprsshield -O $RECONNECT_SCRIPT_NAME
 			  
 			elif [ $shield_hat -eq 2 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_baseshield -O $SCRIPT_NAME
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_baseshield -O $RECONNECT_SCRIPT_NAME
 				
 			elif [ $shield_hat -eq 3 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot_app -O $SCRIPT_NAME
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot_app -O $RECONNECT_SCRIPT_NAME
 			  
 			elif [ $shield_hat -eq 4 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot -O $SCRIPT_NAME
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot -O $RECONNECT_SCRIPT_NAME
 			
 			elif [ $shield_hat -eq 5 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_tracker -O $SCRIPT_NAME
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_tracker -O $RECONNECT_SCRIPT_NAME
 
 			elif [ $shield_hat -eq 6 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_basehat -O $SCRIPT_NAME
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_basehat -O $RECONNECT_SCRIPT_NAME
 
-			  fi
+			fi
 			  
-			  mv $SCRIPT_NAME $PPP_PATH
 			  mv functions.sh $PPP_PATH
 			  mv configs.sh $PPP_PATH
+			  mv configure_modem.sh $PPP_PATH
+			  mv $RECONNECT_SCRIPT_NAME $PPP_PATH
+			  mv $MANAGER_SCRIPT_NAME $PPP_PATH
 			  mv $SERVICE_NAME /etc/systemd/system/
 			  
 			  systemctl daemon-reload
