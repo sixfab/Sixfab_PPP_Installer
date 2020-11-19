@@ -16,10 +16,6 @@ RED='\033[0;31m'
 BLUE='\033[1;34m'
 SET='\033[0m'
 
-function debug()
-{
-    echo $(date "+%Y/%m/%d - %H:%M:%S :") "$1"
-}
 
 function colored_echo
 {
@@ -30,18 +26,18 @@ function colored_echo
 
 # Check Sixfab path 
 if [[ -e $SIXFAB_PATH ]]; then
-    debug "Path already exist!"
+    colored_echo "Sixfab path already exist!" ${SET}
 else
     sudo mkdir $SIXFAB_PATH
-    debug "Sixfab path is created."
+    colored_echo "Sixfab path is created." ${SET}
 fi
 
 # Check PPP path 
 if [[ -e $PPP_PATH ]]; then
-    debug "Path already exist!"
+    colored_echo "PPP path already exist!" ${SET}
 else
     sudo mkdir $PPP_PATH
-    debug "PPP path is created."
+    colored_echo "PPP path is created." ${SET}
 fi
 
 
