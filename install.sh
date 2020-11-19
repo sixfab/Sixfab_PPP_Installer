@@ -7,6 +7,8 @@ REPO_PATH="https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer"
 BRANCH=revision
 SOURCE_PATH="$REPO_PATH/$BRANCH/src"
 SCRIPT_PATH="$REPO_PATH/$BRANCH/src/reconnect_scripts"
+SCRIPT_NAME="ppp_reconnect.sh"
+SERVICE_NAME="ppp_connection_manager.service"
 
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
@@ -146,44 +148,44 @@ do
 	case $auto_reconnect in
 		[Yy]* )    colored_echo "Downloading setup file..."
 			  
-			wget --no-check-certificate $SOURCE_PATH/reconnect_service -O reconnect.service
+			wget --no-check-certificate $SOURCE_PATH/$SERVICE_NAME
 			wget --no-check-certificate $SOURCE_PATH/functions.sh
 			wget --no-check-certificate $SOURCE_PATH/configs.sh
 
 
 			if [ $shield_hat -eq 1 ]; then
 			  
-				wget --no-check-certificate  $SCRIPT_PATH/reconnect_gprsshield -O reconnect.sh
+				wget --no-check-certificate  $SCRIPT_PATH/reconnect_gprsshield -O $SCRIPT_NAME
 			  
 			elif [ $shield_hat -eq 2 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_baseshield -O reconnect.sh
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_baseshield -O $SCRIPT_NAME
 				
 			elif [ $shield_hat -eq 3 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot_app -O reconnect.sh
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot_app -O $SCRIPT_NAME
 			  
 			elif [ $shield_hat -eq 4 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot -O reconnect.sh
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_cellulariot -O $SCRIPT_NAME
 			
 			elif [ $shield_hat -eq 5 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_tracker -O reconnect.sh
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_tracker -O $SCRIPT_NAME
 
 			elif [ $shield_hat -eq 6 ]; then 
 			  
-				wget --no-check-certificate   $SCRIPT_PATH/reconnect_basehat -O reconnect.sh
+				wget --no-check-certificate   $SCRIPT_PATH/reconnect_basehat -O $SCRIPT_NAME
 
 			  fi
 			  
-			  mv reconnect.sh $PPP_PATH
+			  mv $SCRIPT_NAME $PPP_PATH
 			  mv functions.sh $PPP_PATH
 			  mv configs.sh $PPP_PATH
-			  mv reconnect.service /etc/systemd/system/
+			  mv $SERVICE_NAME /etc/systemd/system/
 			  
 			  systemctl daemon-reload
-			  systemctl enable reconnect.service
+			  systemctl enable $SERVICE_NAME
 			  
 			  break;;
 			  
