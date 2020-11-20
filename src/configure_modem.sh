@@ -6,17 +6,17 @@ source functions.sh
 debug "Checking APN and Modem Mode..."
 
 # APN
-atcom "AT+CGDCONT?" "OK" "ERROR" 10 | grep super >> /dev/null
+atcom "AT+CGDCONT?" | grep super >> /dev/null
 
 if [[ $? -ne 0 ]]; then
-    atcom "AT+CGDCONT=1,\"IP\",\"super\"" "OK" "ERROR" 10
+    atcom "AT+CGDCONT=1,\"IP\",\"super\""
     debug "APN is updated."
 fi
 
-atcom "AT#USBCFG?" "OK" "ERROR" 10 | grep 0 >> /dev/null
+atcom "AT#USBCFG?" | grep 0 >> /dev/null
 
 if [[ $? -ne 0 ]]; then
-    atcom "AT#USBCFG=0" "OK" "ERROR" 10
+    atcom "AT#USBCFG=0"
     debug "RMNET/PPP mode is activated."
     debug "Modem restarting..."
 

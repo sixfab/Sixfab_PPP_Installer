@@ -62,6 +62,22 @@ case $shield_hat in
     *)    colored_echo "Wrong Selection, exiting" ${RED}; exit 1;
 esac
 
+colored_echo "Checking requiremments..."
+
+colored_echo "Installing python3 if it is required..."
+if ! [ -x "$(command -v python3)" ]; then
+  sudo apt-get install python3 -y >/dev/null
+fi
+
+colored_echo "Installing pip3 if it is required..."
+if ! [ -x "$(command -v pip3)" ]; then
+  sudo apt-get install python3-pip -y >/dev/null
+fi
+
+colored_echo "Installing or upgrading atcom if it is required..."
+pip3 install -U atcom && source ~/.profile
+
+
 colored_echo "Downloading setup files..."
 wget --no-check-certificate  $SOURCE_PATH/chat-connect -O chat-connect
 if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi

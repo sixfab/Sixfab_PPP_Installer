@@ -16,15 +16,15 @@ function check_network()
         NETWORK_OK=0
 
         debug "SIM Status:"
-        atcom AT+CPIN? OK ERROR 10 | grep "CPIN: READY"
+        atcom AT+CPIN? | grep "CPIN: READY"
         SIM_READY=$?
 
         debug "Network Registeration Status:"
         # For super SIM
-        atcom AT+CREG? OK ERROR 10 | grep "CREG: 0,5"
+        atcom AT+CREG? | grep "CREG: 0,5"
         NETWORK_REG=$?
         # For native SIM
-        atcom AT+CREG? OK ERROR 10 | grep "CREG: 0,1"
+        atcom AT+CREG? | grep "CREG: 0,1"
         NETWORK_REG_2=$?
         # Combined network registeration status
         NETWORK_REG=$((NETWORK_REG+NETWORK_REG_2))
