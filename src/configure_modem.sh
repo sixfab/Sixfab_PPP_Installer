@@ -96,11 +96,11 @@ if [[ $IS_QUECTEL -eq 0 ]]; then
 
 # For Telit 
 elif [[ $IS_TELIT -eq 0 ]]; then
-    atcom "AT#USBCFG?" | grep 4 >> /dev/null
+    atcom "AT#USBCFG?" | grep 0 >> /dev/null
 
     if [[ $? -ne 0 ]]; then
-        atcom "AT#USBCFG=4"
-        debug "ECM mode is activated."
+        atcom "AT#USBCFG=0"
+        debug "PPP mode is activated."
         debug "Modem restarting..."
 
         sleep 20
