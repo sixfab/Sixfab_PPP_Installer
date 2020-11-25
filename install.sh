@@ -67,16 +67,22 @@ colored_echo "Checking requiremments..."
 colored_echo "Installing python3 if it is required..."
 if ! [ -x "$(command -v python3)" ]; then
   sudo apt-get install python3 -y
+  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 fi
 
 colored_echo "Installing pip3 if it is required..."
 if ! [ -x "$(command -v pip3)" ]; then
   sudo apt-get install python3-pip -y
+  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 fi
 
 colored_echo "Installing or upgrading atcom if it is required..."
+
 pip3 install -U atcom
+if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+
 source ~/.profile
+if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 
 colored_echo "Downloading setup files..."
@@ -92,6 +98,7 @@ if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 colored_echo "ppp and wiringpi (gpio tool) installing..."
 apt-get install ppp wiringpi -y
+if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 colored_echo "What is your carrier APN?"
 read carrierapn 
