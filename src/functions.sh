@@ -2,9 +2,10 @@
 
 source configs.sh
 
-function debug()
+function debug
 {
-    echo $(date "+%Y/%m/%d - %H:%M:%S :") "$1"
+    ECHO_PARAM=${2:-''}
+    echo -e $ECHO_PARAM ${GREEN}$(date "+%Y/%m/%d->${BLUE}%H:%M:%S") ${SET} "$1"
 }
 
 function check_network()
