@@ -117,6 +117,14 @@ colored_echo "ppp and wiringpi (gpio tool) installing..."
 apt-get install ppp wiringpi -y
 if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
+# test wiringpi and fix if there is any issue
+gpio readall | grep Oops > /dev/null
+if [[ $? -ne 1 ]]; then 
+	colored_echo "Known wiringpi issue is detected! Wiringpi is updating..."
+	wget https://project-downloads.drogon.net/wiringpi-latest.deb
+	sudo dpkg -i wiringpi-latest.deb
+fi
+
 colored_echo "What is your carrier APN?"
 read carrierapn 
 
