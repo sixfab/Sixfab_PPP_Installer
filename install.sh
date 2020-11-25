@@ -64,6 +64,9 @@ esac
 
 colored_echo "Checking requiremments..."
 
+colored_echo "Updating headers..."
+sudo apt-get update
+
 colored_echo "Installing python3 if it is required..."
 if ! [ -x "$(command -v python3)" ]; then
   sudo apt-get install python3 -y
