@@ -32,6 +32,7 @@ function power_up_module()
 			else
 				debug "Module couldn't be powered up!"
 				sleep 2
+			fi
 		else
 			debug "Module is just powered up."
 			return 0

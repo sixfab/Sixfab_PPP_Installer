@@ -2,6 +2,46 @@
 
 source functions.sh
 
+# default pins set for cellulariot hat 
+STATUS=${STATUS_PIN:-23}
+POWERKEY=${POWERKEY_PIN:-24}
+POWER_UP_REQUIRED=${POWERUP_FLAG:-1}
+
+# 1 : STATUS
+# 2 : POWERKEY 
+function power_up_module
+{
+    # Configure pins
+    gpio -g mode $STATUS in
+    gpio -g mode $POWERKEY out
+
+	for i in {1..20}; do
+		if [[ $(gpio -g read $STATUS) -eq 1 ]]; then
+			debug "Module is powering up..."
+
+			gpio -g write $POWERKEY 0
+			gpio -g write $POWERKEY 1
+			sleep 2
+			gpio -g write $POWERKEY 0
+			sleep 2
+
+			if [[ $(gpio -g read $STATUS) -eq 0 ]]; then
+				debug "Module is powered up."
+				return 0
+				break
+			else
+				debug "Module couldn't be powered up!"
+				sleep 2
+            fi
+		else
+			debug "Module is just powered up."
+			return 0
+			break
+		fi
+	done
+	return 1 
+}
+
 # Check the vendor
 lsusb | grep Quectel >> /dev/null
 IS_QUECTEL=$?
@@ -9,6 +49,12 @@ IS_QUECTEL=$?
 lsusb | grep Telit >> /dev/null
 IS_TELIT=$?
 
+
+if [[ $POWER_UP_REQUIRED -eq 1 ]]; then
+    if power_up_module -eq 0 ; then sleep 0.1; else debug "Module couldn't be powered up! Check the hardware setup!"; fi
+else 
+    debug "Power up is not required."
+fi
 
 ### Modem configuration for RMNET/PPP mode ##################################
 debug "Checking APN and Modem Mode..."
