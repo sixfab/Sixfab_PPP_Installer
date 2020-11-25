@@ -62,7 +62,7 @@ case $shield_hat in
     *)    colored_echo "Wrong Selection, exiting" ${RED}; exit 1;
 esac
 
-colored_echo "Checking requiremments..."
+colored_echo "Checking requirements..."
 
 colored_echo "Updating headers..."
 sudo apt-get update
