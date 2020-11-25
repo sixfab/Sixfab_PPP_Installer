@@ -14,6 +14,7 @@ SERVICE_NAME="ppp_connection_manager.service"
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
 BLUE='\033[1;34m'
+GREEN='\033[0;32m'
 SET='\033[0m'
 
 
@@ -52,12 +53,12 @@ colored_echo "6: 3G/4G Base HAT"
 
 read shield_hat
 case $shield_hat in
-    1)    colored_echo "You chose GSM/GPRS Shield";;
-    2)    colored_echo "You chose Base Shield";;
-    3)    colored_echo "You chose CellularIoT Shield";;
-    4)    colored_echo "You chose CellularIoT HAT";;
-	5)    colored_echo "You chose Tracker HAT";;
-	6)    colored_echo "You chose 3G/4G Base HAT";;		
+    1)    colored_echo "You chose GSM/GPRS Shield" ${GREEN};;
+    2)    colored_echo "You chose Base Shield" ${GREEN};;
+    3)    colored_echo "You chose CellularIoT Shield" ${GREEN};;
+    4)    colored_echo "You chose CellularIoT HAT" ${GREEN};;
+	5)    colored_echo "You chose Tracker HAT" ${GREEN};;
+	6)    colored_echo "You chose 3G/4G Base HAT" ${GREEN};;		
     *)    colored_echo "Wrong Selection, exiting" ${RED}; exit 1;
 esac
 
@@ -65,16 +66,17 @@ colored_echo "Checking requiremments..."
 
 colored_echo "Installing python3 if it is required..."
 if ! [ -x "$(command -v python3)" ]; then
-  sudo apt-get install python3 -y >/dev/null
+  sudo apt-get install python3 -y
 fi
 
 colored_echo "Installing pip3 if it is required..."
 if ! [ -x "$(command -v pip3)" ]; then
-  sudo apt-get install python3-pip -y >/dev/null
+  sudo apt-get install python3-pip -y
 fi
 
 colored_echo "Installing or upgrading atcom if it is required..."
-pip3 install -U atcom && source ~/.profile
+pip3 install -U atcom
+source ~/.profile
 
 
 colored_echo "Downloading setup files..."
@@ -94,20 +96,31 @@ apt-get install ppp wiringpi -y
 colored_echo "What is your carrier APN?"
 read carrierapn 
 
+colored_echo "Your Input is : $carrierapn" ${GREEN} 
+
 while [ 1 ]
 do
 	colored_echo "Does your carrier need username and password? [Y/n]"
 	read usernpass
 	
+	colored_echo "You chose $usernpass" ${GREEN} 
+
 	case $usernpass in
-		[Yy]* )  while [ 1 ] 
+		[Yy]* )  
+
+		while [ 1 ] 
         do 
         
         colored_echo "Enter username"
         read username
 
+		colored_echo "Your Input is : $username" ${GREEN} 
+
         colored_echo "Enter password"
         read password
+
+		colored_echo "Your Input is : $password" ${GREEN} 
+
         sed -i "s/noauth/#noauth\nuser \"$username\"\npassword \"$password\"/" provider
         break 
         done
@@ -121,6 +134,8 @@ done
 
 colored_echo "What is your device communication PORT? (ttyS0/ttyUSB3/etc.)"
 read devicename 
+
+colored_echo "Your input is: $devicename" ${GREEN} 
 
 mkdir -p /etc/chatscripts
 
@@ -146,6 +161,8 @@ while [ 1 ]
 do
 	colored_echo "Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]"
 	read auto_reconnect
+
+	colored_echo "You chose $auto_reconnect" ${GREEN} 
 
 	case $auto_reconnect in
 		[Yy]* )    colored_echo "Downloading setup file..."
@@ -217,4 +234,6 @@ do
 done
 
 read -p "Press ENTER key to reboot" ENTER
+
+colored_echo "Rebooting..." ${GREEN}
 reboot
