@@ -169,6 +169,17 @@ read devicename
 
 colored_echo "Your input is: $devicename" ${GREEN} 
 
+if grep -q "ttyS0" <<<"$devicename"; then
+    debug "Doing atcom configuration for ttyS0 serial..."
+	# create atcom config
+	echo port: "/dev/ttyS0" > configs.yml
+	mv configs.yml $PPP_PATH
+else
+	# delete atcom config
+	ls $PPP_PATH | grep configs.yml > /dev/null
+	if [[ $? -eq 0 ]]; then rm $PPP_PATH/configs.yml; fi
+fi
+
 mkdir -p /etc/chatscripts
 
 mv chat-connect /etc/chatscripts/
