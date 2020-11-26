@@ -214,6 +214,8 @@ do
 			wget --no-check-certificate $SOURCE_PATH/$MANAGER_SCRIPT_NAME
 			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
+			# APN Configuration
+			sed -i "s/SIM_APN/$carrierapn/" configure_modem.sh
 
 			if [ $shield_hat -eq 1 ]; then
 			  
@@ -223,6 +225,7 @@ do
 				sed -i "s/STATUS_PIN/$STATUS_GPRS/" configure_modem.sh
 				sed -i "s/POWERKEY_PIN/$POWERKEY_GPRS/" configure_modem.sh
 				sed -i "s/POWERUP_FLAG/$POWERUP_REQ/" configure_modem.sh
+
 			  
 			elif [ $shield_hat -eq 2 ]; then 
 			  
