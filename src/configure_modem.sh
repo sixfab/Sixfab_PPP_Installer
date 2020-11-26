@@ -52,7 +52,7 @@ else
 fi
 
 ### Modem configuration for RMNET/PPP mode ##################################
-debug "Checking APN and Modem Mode..."
+debug "Checking APN and Modem Modem..."
 
 # APN Configuration
 # -----------------
@@ -177,5 +177,5 @@ fi
 
 # Check the network is ready
 # --------------------------
-if check_network -eq 0; then exit 0; else debug "Network registeration is failed!"; exit 1; fi
+if check_network -eq 0; then exit 0; else debug "Network registeration is failed!. Modem configuration is unsuccesfully ended!"; exit 1; fi
 
