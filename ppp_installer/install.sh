@@ -92,7 +92,6 @@ sed -i "s/#DEVICE/$devicename/" provider
 mv provider /etc/ppp/peers/provider
 
 if ! (grep -q 'sudo route' /etc/ppp/ip-up ); then
-    echo "sudo route del default" >> /etc/ppp/ip-up
     echo "sudo route add default ppp0" >> /etc/ppp/ip-up
 fi
 
