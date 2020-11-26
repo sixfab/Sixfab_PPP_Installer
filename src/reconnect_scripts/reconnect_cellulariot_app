@@ -52,7 +52,7 @@ function restart_power()
 	gpio -g write $DISABLE 1 # power is enabled
 }
 
-restart_power # Restart power
+#restart_power
 
 # Modem power up
 if power_up_module -eq 0 ; then sleep 0.1; else debug "Module couldn't be powered up! Check the hardware setup!"; fi
