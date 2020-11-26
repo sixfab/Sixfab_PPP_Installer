@@ -23,7 +23,7 @@ function power_up_module()
 			gpio -g write $POWERKEY 1
 			sleep 2
 			gpio -g write $POWERKEY 0
-			sleep 2
+			sleep 5
 
 			if [[ $(gpio -g read $STATUS) -eq 0 ]]; then
 				debug "Module is powered up."
