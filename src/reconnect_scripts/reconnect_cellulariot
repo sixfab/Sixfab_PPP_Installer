@@ -86,7 +86,9 @@ while true; do
         if [[ $PINGG -eq 0 ]]; then
             printf "+"
         else
-	        debug "Connection is down, reconnecting..."
+	        debug "Connection is down, reconnecting..."      
+			restart_power
+			if power_up_module -eq 0 ; then sleep 0.1; else debug "Module couldn't be powered up! Check the hardware setup!"; fi
             if check_network -eq 0; then sleep 0.1; else debug "Network registeration is failed!"; fi
 	        sudo pon
 			
