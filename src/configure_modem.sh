@@ -7,6 +7,9 @@ STATUS=${STATUS_PIN:-23}
 POWERKEY=${POWERKEY_PIN:-24}
 POWER_UP_REQUIRED=${POWERUP_FLAG:-1}
 
+# default arguments
+APN=${SIM_APN:-super}
+
 # 1 : STATUS
 # 2 : POWERKEY 
 function power_up_module
@@ -23,7 +26,7 @@ function power_up_module
 			gpio -g write $POWERKEY 1
 			sleep 2
 			gpio -g write $POWERKEY 0
-			sleep 2
+			sleep 5
 
 			if [[ $(gpio -g read $STATUS) -eq 0 ]]; then
 				debug "Module is powered up."
@@ -42,14 +45,6 @@ function power_up_module
 	return 1 
 }
 
-# Check the vendor
-lsusb | grep Quectel >> /dev/null
-IS_QUECTEL=$?
-
-lsusb | grep Telit >> /dev/null
-IS_TELIT=$?
-
-
 if [[ $POWER_UP_REQUIRED -eq 1 ]]; then
     if power_up_module -eq 0 ; then sleep 0.1; else debug "Module couldn't be powered up! Check the hardware setup!"; fi
 else 
@@ -61,12 +56,19 @@ debug "Checking APN and Modem Mode..."
 
 # APN Configuration
 # -----------------
-atcom "AT+CGDCONT?" | grep super >> /dev/null
+atcom "AT+CGDCONT?" | grep $APN > /dev/null
 
 if [[ $? -ne 0 ]]; then
-    atcom "AT+CGDCONT=1,\"IPV4V6\",\"super\""
+    atcom "AT+CGDCONT=1,\"IPV4V6\",\"$APN\""
     debug "APN is updated."
 fi
+
+# Check the vendor
+lsusb | grep Quectel >> /dev/null
+IS_QUECTEL=$?
+
+lsusb | grep Telit >> /dev/null
+IS_TELIT=$?
 
 # Modem Mode Configuration
 # ------------------------
@@ -80,7 +82,7 @@ if [[ $IS_QUECTEL -eq 0 ]]; then
         # BG95 and BG96
 
         # RAT Searching Sequence
-        atcom "AT+QCFG=\"nwscanseq\"" | grep 000201 >> /dev/null
+        atcom "AT+QCFG=\"nwscanseq\"" | grep 020301 > /dev/null
 
         if [[ $? -ne 0 ]]; then
             atcom "AT+QCFG=\"nwscanseq\",00"
@@ -88,7 +90,7 @@ if [[ $IS_QUECTEL -eq 0 ]]; then
         fi
 
         # RAT(s) to be Searched
-        atcom "AT+QCFG=\"nwscanmode\"" | grep 0 >> /dev/null
+        atcom "AT+QCFG=\"nwscanmode\"" | grep 0 > /dev/null
 
         if [[ $? -ne 0 ]]; then
             atcom "AT+QCFG=\"nwscanmode\",0"
@@ -96,7 +98,7 @@ if [[ $IS_QUECTEL -eq 0 ]]; then
         fi
 
         # Network Category to be Searched under LTE RAT
-        atcom "AT+QCFG=\"iotopmode\"" | grep 0 >> /dev/null
+        atcom "AT+QCFG=\"iotopmode\"" | grep 0 > /dev/null
 
         if [[ $? -ne 0 ]]; then
             atcom "AT+QCFG=\"iotopmode\",0"
@@ -106,7 +108,7 @@ if [[ $IS_QUECTEL -eq 0 ]]; then
         # end of configuraiton for BG95/6
     else
         # EC25 or derives.
-        atcom "AT+QCFG=\"usbnet\"" | grep 0 >> /dev/null
+        atcom "AT+QCFG=\"usbnet\"" | grep 0 > /dev/null
 
         if [[ $? -ne 0 ]]; then
             atcom "AT+QCFG=\"usbnet\",0"
@@ -170,7 +172,7 @@ else
     debug "The cellular module couldn't be detected!"
     exit 1
 fi
-### End of Modem configuration for ECM mode ############################
+### End of Modem configuration for RMNET/PPP mode ############################
 
 
 # Check the network is ready

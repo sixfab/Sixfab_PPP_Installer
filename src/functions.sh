@@ -24,19 +24,24 @@ function check_network()
     for i in {1..$NETWORK_CHECK_TIMEOUT}; do
         NETWORK_OK=0
 
-        debug "SIM Status:"
+        debug "SIM Status: " "-n" # no line break
         atcom AT+CPIN? | grep "CPIN: READY"
         SIM_READY=$?
 
-        debug "Network Registeration Status:"
+        if [[ $SIM_READY -ne 0 ]]; then  atcom AT+CPIN? | grep "CPIN:"; fi
+
+
+        debug "Network Registeration Status: " "-n" # no line break
         # For super SIM
-        atcom AT+CREG? | grep "CREG: 0,5"
+        atcom AT+CREG? | grep "CREG: 0,5" > /dev/null
         NETWORK_REG=$?
         # For native SIM
-        atcom AT+CREG? | grep "CREG: 0,1"
+        atcom AT+CREG? | grep "CREG: 0,1" > /dev/null
         NETWORK_REG_2=$?
         # Combined network registeration status
         NETWORK_REG=$((NETWORK_REG+NETWORK_REG_2))
+
+        if [[ $NETWORK_REG -ne 0 ]] || [[ $NETWORK_REG_2 -ne 0 ]]; then  atcom AT+CREG? | grep "CREG:"; fi
 
         if [[ $SIM_READY -eq 0 ]] && [[ $NETWORK_REG -le 1 ]]; then
             debug "Network is ready."
@@ -44,9 +49,10 @@ function check_network()
             return 0
             break
         else
-            printf "?"
+            debug "Retrying network registeration..."
         fi
         sleep 2
     done
+    debug "Retwork registeration is failed! Please check SIM card, data plan, antennas etc."
     return 1
 }
