@@ -223,11 +223,11 @@ do
 	case $auto_reconnect in
 		[Yy]* )    colored_echo "Copying setup file..."
 			  
-			cp $SOURCE_PATH/$SERVICE_NAME
-			cp $SOURCE_PATH/functions.sh
-			cp $SOURCE_PATH/configs.sh
-			cp $SOURCE_PATH/configure_modem.sh
-			cp $SOURCE_PATH/$MANAGER_SCRIPT_NAME
+			cp $SOURCE_PATH/$SERVICE_NAME $SERVICE_NAME
+			cp $SOURCE_PATH/functions.sh functions.sh
+			cp $SOURCE_PATH/configs.sh configs.sh
+			cp $SOURCE_PATH/configure_modem.sh configure_modem.sh
+			cp $SOURCE_PATH/$MANAGER_SCRIPT_NAME $MANAGER_SCRIPT_NAME
 
 			# APN Configuration
 			sed -i "s/SIM_APN/$carrierapn/" configure_modem.sh
