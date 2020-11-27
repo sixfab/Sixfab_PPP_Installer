@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Created on November 27, 2020 by Yasin Kaya (selengalp)
+
 SIXFAB_PATH="/opt/sixfab"
 PPP_PATH="/opt/sixfab/ppp_connection_manager"
 
