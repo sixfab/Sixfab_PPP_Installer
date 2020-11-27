@@ -19,6 +19,16 @@ Each of these shield can be connected to Internet via PPP(Point to Point Protoco
 
 Without further ado let us jump into the installation process:
 
+## Standalone Installation
+
+All source files are downloded from internet in this method. It is enough to download **ppp_install_standalone.sh** and run it.
+
+`wget https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_install_standalone.sh`
+`sudo chmod +x ppp_install_standalone.sh`
+`sudo ./ppp_install_standalone.sh`
+
+## Installation with repository
+
 Clone the repository
 
 `git clone https://github.com/sixfab/Sixfab_PPP_Installer.git` 
@@ -26,14 +36,16 @@ Clone the repository
 Now change the permission of the downloaded script.
 
 ```
-cd Sixfab_PPP_Installer/ppp_installer
-chmod +x install.sh
+cd Sixfab_PPP_Installer
+chmod +x ppp_install.sh
 ```
 
 Now install the script
 
-`sudo ./install.sh`
-  
+`sudo ./ppp_install.sh`
+
+
+## After running installation file
 It will ask several questions, just answer them accordingly to complete the installation process. The questions are:
 `Please choose your Sixfab Shield/HAT`
  
@@ -43,7 +55,7 @@ Then it installs ppp. 
 
 `What is your carrier APN?`
 
-Here, it asks for your carrier's APN. For me it is hologram. 
+Here, it asks for your carrier's APN. For me it is **super**. Because I use Sixfab SIM. Please search it on your SIM provider documentations. You can reach the information by using **WHAT IS [YOUR PROVIDER NAME]'s APN** keywords probably.
 
 `Does your carrier need username and password? [Y/n]`
 
@@ -55,11 +67,9 @@ If yes then it will ask for user name.
 `Enter password`
 Then it will ask for password.
 
-Once you type the username asks for password.
-
 `What is your device communication PORT? (ttyS0/ttyUSB3/etc.`
 
-In this step you will enter your PORT. e.g For 3G, 4G/LTE Base Shield it will be ttyUSB3. 
+In this step you will enter your PORT. e.g For 3G, 4G/LTE Base Shield it will be ttyUSB3.
 
 `Do you want to activate auto connect/reconnect service at R.Pi boot up?`
 
