@@ -170,7 +170,25 @@ read devicename
 colored_echo "Your input is: $devicename" ${GREEN} 
 
 if grep -q "ttyS0" <<<"$devicename"; then
-    debug "Doing atcom configuration for ttyS0 serial..."
+	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}
+	colored_echo "REMINDER!" ${BLUE}
+	colored_echo "- Disable serial console and enable miniuart to use ttyS0 as the serial interface." ${SET}
+	colored_echo "✔ If your ttyS0 (miniuart) port is enabled, press ENTER and continue to installation." ${SET}
+	colored_echo "✘ If not, please follow the instructions to enable ttyS0 interface on Raspberry Pi" ${SET}
+	echo -e "
+	1. Start raspi-config: ${BLUE}sudo raspi-config${SET}.
+	2. Select option 3 - ${BLUE}Interface Options${SET}.
+	3. Select option P6 - ${BLUE}Serial Port${SET}.
+	4. ${BLUE}At the prompt Would you like a login shell to be accessible over serial?${SET} answer ${BLUE}'No'${SET}
+	5. ${BLUE}At the prompt Would you like the serial port hardware to be enabled?${SET} answer ${BLUE}'Yes'${SET}
+	6. Exit raspi-config and ${BLUE}reboot${SET} the Pi for changes to take effect.
+	"
+	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}
+	echo
+	echo -e "Press ${BLUE}ENTER${SET} key to continue to installation or press ${BLUE}CTRL^C${SET} to abort installation and enable ttyS0 serial interface."
+	read -p "" ENTER
+
+    colored_echo "Doing atcom configuration for ttyS0 serial..."
 	# create atcom config
 	echo port: "/dev/ttyS0" > configs.yml
 	mv configs.yml $PPP_PATH
