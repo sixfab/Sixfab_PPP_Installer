@@ -104,9 +104,9 @@ if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 colored_echo "Copying setup files..."
 
-cp  $SOURCE_PATH/chat-connect -O chat-connect
-cp  $SOURCE_PATH/chat-disconnect -O chat-disconnect
-cp  $SOURCE_PATH/provider -O provider
+cp  $SOURCE_PATH/chat-connect chat-connect
+cp  $SOURCE_PATH/chat-disconnect chat-disconnect
+cp  $SOURCE_PATH/provider provider
 
 colored_echo "ppp and wiringpi (gpio tool) installing..."
 apt-get install ppp wiringpi -y
@@ -234,7 +234,7 @@ do
 
 			if [ $shield_hat -eq 1 ]; then
 			  
-				cp $SCRIPT_PATH/reconnect_gprsshield -O $RECONNECT_SCRIPT_NAME
+				cp $SCRIPT_PATH/reconnect_gprsshield $RECONNECT_SCRIPT_NAME
 
 				sed -i "s/STATUS_PIN/$STATUS_GPRS/" configure_modem.sh
 				sed -i "s/POWERKEY_PIN/$POWERKEY_GPRS/" configure_modem.sh
@@ -243,13 +243,13 @@ do
 			  
 			elif [ $shield_hat -eq 2 ]; then 
 			  
-				cp $SCRIPT_PATH/reconnect_baseshield -O $RECONNECT_SCRIPT_NAME
+				cp $SCRIPT_PATH/reconnect_baseshield $RECONNECT_SCRIPT_NAME
 
 				sed -i "s/POWERUP_FLAG/$POWERUP_NOT_REQ/" configure_modem.sh
 				
 			elif [ $shield_hat -eq 3 ]; then 
 			  
-				cp $SCRIPT_PATH/reconnect_cellulariot_app -O $RECONNECT_SCRIPT_NAME
+				cp $SCRIPT_PATH/reconnect_cellulariot_app $RECONNECT_SCRIPT_NAME
 
 				sed -i "s/STATUS_PIN/$STATUS_CELL_IOT_APP/" configure_modem.sh
 				sed -i "s/POWERKEY_PIN/$POWERKEY_CELL_IOT_APP/" configure_modem.sh
@@ -257,7 +257,7 @@ do
 			  
 			elif [ $shield_hat -eq 4 ]; then 
 			  
-				cp $SCRIPT_PATH/reconnect_cellulariot -O $RECONNECT_SCRIPT_NAME
+				cp $SCRIPT_PATH/reconnect_cellulariot $RECONNECT_SCRIPT_NAME
 
 				sed -i "s/STATUS_PIN/$STATUS_CELL_IOT/" configure_modem.sh
 				sed -i "s/POWERKEY_PIN/$POWERKEY_CELL_IOT/" configure_modem.sh
@@ -265,7 +265,7 @@ do
 			
 			elif [ $shield_hat -eq 5 ]; then 
 			  
-				cp $SCRIPT_PATH/reconnect_tracker -O $RECONNECT_SCRIPT_NAME
+				cp $SCRIPT_PATH/reconnect_tracker $RECONNECT_SCRIPT_NAME
 
 				sed -i "s/STATUS_PIN/$STATUS_TRACKER/" configure_modem.sh
 				sed -i "s/POWERKEY_PIN/$POWERKEY_TRACKER/" configure_modem.sh
@@ -273,7 +273,7 @@ do
 
 			elif [ $shield_hat -eq 6 ]; then 
 			  
-				cp $SCRIPT_PATH/reconnect_basehat -O $RECONNECT_SCRIPT_NAME
+				cp $SCRIPT_PATH/reconnect_basehat $RECONNECT_SCRIPT_NAME
 
 				sed -i "s/POWERUP_FLAG/$POWERUP_NOT_REQ/" configure_modem.sh
 
