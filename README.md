@@ -57,7 +57,7 @@ Then it installs ppp. 
 
 `What is your carrier APN?`
 
-Here, it asks for your carrier's APN. For me it is `super`. Because I use Sixfab SIM. Please search it on your SIM provider documentations. You can reach the information by using `WHAT IS [YOUR PROVIDER NAME]'s APN` keywords probably.
+Here, it asks for your carrier's APN. For me it is `super`. Because I use Sixfab SIM. Please search it on documentations of your SIM provider . You can reach the information by using `WHAT IS [YOUR PROVIDER NAME]'s APN` keywords probably.
 
 `Does your carrier need username and password? [Y/n]`
 
