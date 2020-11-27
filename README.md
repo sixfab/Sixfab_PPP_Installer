@@ -19,6 +19,12 @@ Each of these shield can be connected to Internet via PPP(Point to Point Protoco
 
 Without further ado let us jump into the installation process:
 
+There are two method to installation.
+1. Standalone installation 
+2. Installation by using repository 
+
+You can choose one of them and go on the installation. 
+
 ## Standalone Installation
 
 All source files are downloded from internet in this method. It is enough to download **ppp_install_standalone.sh** and run it.
@@ -47,7 +53,7 @@ Now install the script
 `sudo ./ppp_install.sh`
 
 
-## After running installation file
+## After running installation script
 It will ask several questions, just answer them accordingly to complete the installation process. The questions are:
 `Please choose your Sixfab Shield/HAT`
  
