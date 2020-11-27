@@ -23,11 +23,13 @@ Without further ado let us jump into the installation process:
 
 All source files are downloded from internet in this method. It is enough to download **ppp_install_standalone.sh** and run it.
 
-`wget https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_install_standalone.sh`
-`sudo chmod +x ppp_install_standalone.sh`
-`sudo ./ppp_install_standalone.sh`
+```
+wget https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_install_standalone.sh
+sudo chmod +x ppp_install_standalone.sh
+sudo ./ppp_install_standalone.sh
+```
 
-## Installation with repository
+## Installation by using repository 
 
 Clone the repository
 
