@@ -7,7 +7,7 @@ SIXFAB_PATH="/opt/sixfab"
 PPP_PATH="/opt/sixfab/ppp_connection_manager"
 
 REPO_PATH="https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer"
-BRANCH=revision
+BRANCH=dev
 SOURCE_PATH="$REPO_PATH/$BRANCH/src"
 SCRIPT_PATH="$REPO_PATH/$BRANCH/src/reconnect_scripts"
 RECONNECT_SCRIPT_NAME="ppp_reconnect.sh"
@@ -23,7 +23,7 @@ SET='\033[0m'
 function colored_echo
 {
 	COLOR=${2:-$YELLOW}
-	echo -e "$COLOR $1 ${SET}"
+	echo -e "$COLOR$1 ${SET}"
 }
 
 
