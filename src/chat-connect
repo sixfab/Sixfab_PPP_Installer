@@ -7,11 +7,15 @@ ABORT "NO ANSWER"
 TIMEOUT 30
 "" AT
 OK ATE0
+<<<<<<< HEAD:src/chat-connect
 OK AT+CPIN?
 OK AT+CSQ
 OK AT+CREG?
 OK AT+CGREG?
 OK AT+COPS?
+=======
+OK ATI;+CSQ;+COPS?;+CGREG?;&D2
+>>>>>>> master:ppp_installer/chat-connect
 OK AT+CGDCONT=1,"IP","\T",,0,0
 OK ATD*99#
 CONNECT
