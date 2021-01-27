@@ -1,14 +1,13 @@
 [Unit]
-Description=PPP Auto Connection
+Description=PPP Connection Manager
 After=network.target
 
 [Service]
-ExecStart=/bin/sh /usr/src/reconnect.sh
-WorkingDirectory=/usr/src/
+ExecStart=/bin/bash ppp_connection_manager.sh
+WorkingDirectory=/opt/sixfab/ppp_connection_manager
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
-User=pi
 
 [Install]
 WantedBy=multi-user.target
