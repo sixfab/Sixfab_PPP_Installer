@@ -13,7 +13,6 @@ persist
 debug
 # If you want to use the HSDPA link as your gateway
 defaultroute
-replacedefaultroute
 # pppd must not propose any IP address to the peer
 noipdefault
 # No ppp compression
