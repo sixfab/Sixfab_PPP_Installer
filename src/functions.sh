@@ -31,7 +31,7 @@ function check_network()
         if [[ $SIM_READY -ne 0 ]]; then  atcom AT+CPIN? | grep "CPIN:"; fi
 
 
-        debug "Network Registeration Status: " "-n" # no line break
+        debug "Network Registration Status: " "-n" # no line break
         NR_TEXT=`atcom AT+CREG? | grep "CREG:"`
         echo $NR_TEXT
 
@@ -41,7 +41,7 @@ function check_network()
         # For native SIM
         echo $NR_TEXT | grep "CREG: 0,1" > /dev/null
         NETWORK_REG_2=$?
-        # Combined network registeration status
+        # Combined network registration status
         NETWORK_REG=$((NETWORK_REG+NETWORK_REG_2))
 
         if [[ $SIM_READY -eq 0 ]] && [[ $NETWORK_REG -le 1 ]]; then
@@ -50,10 +50,10 @@ function check_network()
             return 0
             break
         else
-            debug "Retrying network registeration..."
+            debug "Retrying network registration..."
         fi
         sleep 2
     done
-    debug "Network registeration is failed! Please check SIM card, data plan, antennas etc."
+    debug "Network registration is failed! Please check SIM card, data plan, antennas etc."
     return 1
 }

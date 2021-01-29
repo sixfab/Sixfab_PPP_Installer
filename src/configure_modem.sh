@@ -177,5 +177,5 @@ fi
 
 # Check the network is ready
 # --------------------------
-if check_network -eq 0; then exit 0; else debug "Network registeration is failed!. Modem configuration is unsuccesfully ended!"; exit 1; fi
+if check_network -eq 0; then exit 0; else debug "Network registration is failed!. Modem configuration is unsuccesfully ended!"; exit 1; fi
 

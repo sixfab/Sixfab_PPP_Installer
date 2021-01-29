@@ -12,7 +12,7 @@ if check_network -eq 0; then
 	PPP_IS_DEFAULT=$?
 	if [[ $PPP_IS_DEFAULT -ne 0 ]]; then sudo route add default ppp0; debug "ppp0 is added as default interface manually."; fi
 else 
-    debug "Network registeration is failed!";
+    debug "Network registration is failed!";
 fi 
 
 while true; do
@@ -33,7 +33,7 @@ while true; do
             printf "+"
         else
 	        debug "Connection is down, reconnecting..."
-            if check_network -eq 0; then sleep 0.1; else debug "Network registeration is failed!"; fi
+            if check_network -eq 0; then sleep 0.1; else debug "Network registration is failed!"; fi
 	        sudo pon
 
             # check default interface
