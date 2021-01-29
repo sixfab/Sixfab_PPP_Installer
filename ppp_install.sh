@@ -205,6 +205,10 @@ sed -i "s/#APN/$carrierapn/" provider
 sed -i "s/#DEVICE/$devicename/" provider
 mv provider /etc/ppp/peers/provider
 
+if ! (grep -q 'sudo route' /etc/ppp/ip-up ); then	
+    echo "sudo route add default ppp0" >> /etc/ppp/ip-up	
+fi
+
 if [[ $shield_hat -eq 2 ]] || [[ $shield_hat -eq 6 ]]; then
 	if ! (grep -q 'max_usb_current' /boot/config.txt ); then
 		echo "max_usb_current=1" >> /boot/config.txt
