@@ -75,10 +75,13 @@ IS_TELIT=$?
 # For Quectel
 if [[ $IS_QUECTEL -eq 0 ]]; then
 
+    lsusb | grep 0700 > /dev/null
+    MODEL_BG95=$?
+
     lsusb | grep BG9 > /dev/null
     MODEL_BG9X=$?
 
-    if [[ $MODEL_BG9X -eq 0 ]]; then
+    if [[ $MODEL_BG9X -eq 0 ]] || [[ $MODEL_BG95 -eq 0 ]]; then
         # BG95 and BG96
 
         # RAT Searching Sequence
