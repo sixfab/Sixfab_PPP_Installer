@@ -35,16 +35,26 @@ function check_network()
         NR_TEXT=`atcom AT+CREG? | grep "CREG:"`
         echo $NR_TEXT
 
-        # For super SIM
+         # For super SIM
         echo $NR_TEXT | grep "CREG: 0,5" > /dev/null
-        NETWORK_REG=$?
+        NETWORK_REG_1=$?
+        echo $NR_TEXT | grep "CREG: 1,5" > /dev/null
+        NETWORK_REG_2=$?
+        echo $NR_TEXT | grep "CREG: 2,5" > /dev/null
+        NETWORK_REG_3=$?
+
         # For native SIM
         echo $NR_TEXT | grep "CREG: 0,1" > /dev/null
-        NETWORK_REG_2=$?
-        # Combined network registration status
-        NETWORK_REG=$((NETWORK_REG+NETWORK_REG_2))
+        NETWORK_REG_4=$?
+        echo $NR_TEXT | grep "CREG: 1,1" > /dev/null
+        NETWORK_REG_5=$?
+        echo $NR_TEXT | grep "CREG: 2,1" > /dev/null
+        NETWORK_REG_6=$?
 
-        if [[ $SIM_READY -eq 0 ]] && [[ $NETWORK_REG -le 1 ]]; then
+        # Combined network registration status
+        NETWORK_REG=$((NETWORK_REG_1 & NETWORK_REG_2 & NETWORK_REG_3 & NETWORK_REG_4 & NETWORK_REG_5 & NETWORK_REG_6))
+        
+        if [[ $SIM_READY -eq 0 ]] && [[ $NETWORK_REG -eq 0 ]]; then
             debug "Network is ready."
             NETWORK_OK=1
             return 0
