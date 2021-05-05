@@ -1,0 +1,13 @@
+[Unit]
+Description=Jetson PPP Connection Manager
+After=network.target
+
+[Service]
+ExecStart=/bin/bash jetson_ppp_connection_manager.sh
+WorkingDirectory=/opt/sixfab/ppp_connection_manager
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

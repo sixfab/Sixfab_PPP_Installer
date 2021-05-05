@@ -11,8 +11,8 @@ BRANCH=master
 SOURCE_PATH="$REPO_PATH/$BRANCH/src"
 SCRIPT_PATH="$REPO_PATH/$BRANCH/src/reconnect_scripts"
 RECONNECT_SCRIPT_NAME="ppp_reconnect.sh"
-MANAGER_SCRIPT_NAME="ppp_connection_manager.sh"
-SERVICE_NAME="ppp_connection_manager.service"
+MANAGER_SCRIPT_NAME="jetson_ppp_connection_manager.sh"
+SERVICE_NAME="jetson_ppp_connection_manager.service"
 
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
@@ -136,6 +136,52 @@ mv provider /etc/ppp/peers/provider
 if ! (grep -q 'sudo route' /etc/ppp/ip-up ); then	
     echo "sudo route add default ppp0" >> /etc/ppp/ip-up	
 fi
+
+while [ 1 ]
+do
+	colored_echo "Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]"
+	read auto_reconnect
+
+	colored_echo "You chose $auto_reconnect" ${GREEN} 
+
+	case $auto_reconnect in
+		[Yy]* )    colored_echo "Copying setup file..."
+			  
+			wget --no-check-certificate  $SOURCE_PATH/$SERVICE_NAME -O $SERVICE_NAME
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+			
+			wget --no-check-certificate  $SOURCE_PATH/functions.sh -O functions.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+			
+			wget --no-check-certificate  $SOURCE_PATH/configs.sh -O configs.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+			
+			wget --no-check-certificate  $SOURCE_PATH/jetson_configure_modem.sh -O jetson_configure_modem.sh
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+			
+			wget --no-check-certificate  $SOURCE_PATH/$MANAGER_SCRIPT_NAME -O $MANAGER_SCRIPT_NAME
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+			
+			# APN Configuration
+			sed -i "s/SIM_APN/$carrierapn/" jetson_configure_modem.sh
+  
+			  mv functions.sh $PPP_PATH
+			  mv configs.sh $PPP_PATH
+			  mv jetson_configure_modem.sh $PPP_PATH
+			  mv $RECONNECT_SCRIPT_NAME $PPP_PATH
+			  mv $MANAGER_SCRIPT_NAME $PPP_PATH
+			  mv $SERVICE_NAME /etc/systemd/system/
+			  
+			  systemctl daemon-reload
+			  systemctl enable $SERVICE_NAME
+			  
+			  break;;
+			  
+		[Nn]* )    echo -e "${YELLOW}To connect to internet run ${BLUE}\"sudo pon\"${YELLOW} and to disconnect run ${BLUE}\"sudo poff\" ${SET}"
+			  break;;
+		*)   colored_echo "Wrong Selection, Select among Y or n" ${RED};;
+	esac
+done
 
 read -p "Press ENTER key to reboot" ENTER
 reboot
