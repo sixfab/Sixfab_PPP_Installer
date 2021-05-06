@@ -13,6 +13,7 @@ StandardOutput=inherit
 StandardError=inherit
 RemainAfterExit=true
 Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
