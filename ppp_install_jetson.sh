@@ -15,6 +15,7 @@ SOURCE_PATH="$REPO_PATH/$BRANCH/src"
 SCRIPT_PATH="$REPO_PATH/$BRANCH/src/reconnect_scripts"
 MANAGER_SCRIPT_NAME="jetson_ppp_connection_manager.sh"
 SERVICE_NAME="jetson_ppp_connection_manager.service"
+UDEV_RULE_NAME="20-usb-bus.rules"
 
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
@@ -163,6 +164,9 @@ do
 			
 			wget --no-check-certificate  $SOURCE_PATH/$MANAGER_SCRIPT_NAME -O $MANAGER_SCRIPT_NAME
 			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
+
+			wget --no-check-certificate  $SOURCE_PATH/$UDEV_RULE_NAME -O $UDEV_RULE_NAME
+			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 			
 			# APN Configuration
 			sed -i "s/SIM_APN/$carrierapn/" jetson_configure_modem.sh
@@ -175,6 +179,7 @@ do
 			mv jetson_configure_modem.sh $PPP_PATH
 			mv $MANAGER_SCRIPT_NAME $PPP_PATH
 			mv $SERVICE_NAME /etc/systemd/system/
+			mv $UDEV_RULE_NAME /etc/udev/rules.d/
 
 			systemctl daemon-reload
 			systemctl enable $SERVICE_NAME
