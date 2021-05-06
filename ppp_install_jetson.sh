@@ -3,14 +3,16 @@
 # Created on July 12, 2019 by Saeed Johar (saeedjohar)
 # Revised on November 19, 2020 by Yasin Kaya (selengalp) 
 
+source src/functions.sh
+
 SIXFAB_PATH="/opt/sixfab"
 PPP_PATH="/opt/sixfab/ppp_connection_manager"
 
+# NEEDS TO BE CHANGED TO SIXFAB IF PULLED
 REPO_PATH="https://raw.githubusercontent.com/bzt/Sixfab_PPP_Installer"
 BRANCH=master
 SOURCE_PATH="$REPO_PATH/$BRANCH/src"
 SCRIPT_PATH="$REPO_PATH/$BRANCH/src/reconnect_scripts"
-RECONNECT_SCRIPT_NAME="ppp_reconnect.sh"
 MANAGER_SCRIPT_NAME="jetson_ppp_connection_manager.sh"
 SERVICE_NAME="jetson_ppp_connection_manager.service"
 
@@ -139,10 +141,10 @@ fi
 
 while [ 1 ]
 do
-	colored_echo "Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]"
+	colored_echo "Do you want to activate auto connect service at boot up? [Y/n]"
 	read auto_reconnect
 
-	colored_echo "You chose $auto_reconnect" ${GREEN} 
+	colored_echo "You chose $auto_connect" ${GREEN} 
 
 	case $auto_reconnect in
 		[Yy]* )    colored_echo "Copying setup file..."
@@ -164,18 +166,20 @@ do
 			
 			# APN Configuration
 			sed -i "s/SIM_APN/$carrierapn/" jetson_configure_modem.sh
+
+			# Devicename
+			sed -i "s/DEVICE/$devicename/" jetson_configure_modem.sh
   
-			  mv functions.sh $PPP_PATH
-			  mv configs.sh $PPP_PATH
-			  mv jetson_configure_modem.sh $PPP_PATH
-			  mv $RECONNECT_SCRIPT_NAME $PPP_PATH
-			  mv $MANAGER_SCRIPT_NAME $PPP_PATH
-			  mv $SERVICE_NAME /etc/systemd/system/
-			  
-			  systemctl daemon-reload
-			  systemctl enable $SERVICE_NAME
-			  
-			  break;;
+			mv functions.sh $PPP_PATH
+			mv configs.sh $PPP_PATH
+			mv jetson_configure_modem.sh $PPP_PATH
+			mv $MANAGER_SCRIPT_NAME $PPP_PATH
+			mv $SERVICE_NAME /etc/systemd/system/
+
+			systemctl daemon-reload
+			systemctl enable $SERVICE_NAME
+			
+			break;;
 			  
 		[Nn]* )    echo -e "${YELLOW}To connect to internet run ${BLUE}\"sudo pon\"${YELLOW} and to disconnect run ${BLUE}\"sudo poff\" ${SET}"
 			  break;;
