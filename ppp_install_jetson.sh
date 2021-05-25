@@ -173,6 +173,7 @@ do
 
 			# Devicename
 			sed -i "s/DEVICE/$devicename/" jetson_configure_modem.sh
+			sed -i "s/DEVICE/$devicename/" functions.sh
   
 			mv functions.sh $PPP_PATH
 			mv configs.sh $PPP_PATH
