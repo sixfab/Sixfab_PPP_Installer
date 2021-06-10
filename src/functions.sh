@@ -10,6 +10,9 @@ CYAN='\033[0;36m'
 PURPLE='\033[0;35m'
 SET='\033[0m'
 
+# default arguments
+PORT=/dev/DEVICE
+
 function debug
 {
     ECHO_PARAM=${2:-''}
@@ -25,14 +28,14 @@ function check_network()
         NETWORK_OK=0
 
         debug "SIM Status: " "-n" # no line break
-        atcom AT+CPIN? | grep "CPIN: READY"
+        atcom -p $PORT AT+CPIN? | grep "CPIN: READY"
         SIM_READY=$?
 
-        if [[ $SIM_READY -ne 0 ]]; then  atcom AT+CPIN? | grep "CPIN:"; fi
+        if [[ $SIM_READY -ne 0 ]]; then  atcom -p $PORT AT+CPIN? | grep "CPIN:"; fi
 
 
         debug "Network Registration Status: " "-n" # no line break
-        NR_TEXT=`atcom AT+CREG? | grep "CREG:"`
+        NR_TEXT=`atcom -p $PORT AT+CREG? | grep "CREG:"`
         echo $NR_TEXT
 
          # For super SIM
