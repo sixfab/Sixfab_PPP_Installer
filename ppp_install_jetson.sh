@@ -132,6 +132,8 @@ sed -i "s/#APN/$carrierapn/" provider
 sed -i "s/#DEVICE/$devicename/" provider
 mv provider /etc/ppp/peers/provider
 
+chmod 600 /etc/ppp/*-secrets
+
 
 if ! (grep -q 'sudo route' /etc/ppp/ip-up ); then	
     echo "sudo route add default ppp0" >> /etc/ppp/ip-up	
