@@ -214,17 +214,27 @@ do
 			source ~/.profile
 			if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
-			colored_echo "wiringpi (gpio tool) installing..."
-			apt-get install wiringpi -y
+			colored_echo "Installing WiringPi (gpio tool) if required..."
+			
+			# Check the availability of the gpio.
+			gpio -v > /dev/null 2>&1
+			if [[ $? -ne 0 ]]; then colored_echo "WiringPi not found\n" ${RED} ; fi 
+			
+			# Download WiringPi from https://github.com/WiringPi/WiringPi.git 
+			git clone https://github.com/WiringPi/WiringPi.git 
+			
+			# change directory to WiringPi and build from source code
+			pushd WiringPi && ./build && popd
+
 			if [[ $? -ne 0 ]]; then colored_echo "WiringPi installation failed \nTry manual insatallation" ${RED} ; fi
 
-			# test wiringpi and fix if there is any issue
-			gpio readall | grep Oops > /dev/null
-			if [[ $? -ne 1 ]]; then 
-				colored_echo "Known wiringPi issue is detected! WiringPi is updating..."
-				wget https://project-downloads.drogon.net/wiringpi-latest.deb
-				sudo dpkg -i wiringpi-latest.deb
-			fi  
+			# # test wiringpi and fix if there is any issue
+			# gpio readall | grep Oops > /dev/null
+			# if [[ $? -ne 1 ]]; then 
+			# 	colored_echo "Known wiringPi issue is detected! WiringPi is updating..."
+			# 	# wget https://project-downloads.drogon.net/wiringpi-latest.deb
+			# 	# sudo dpkg -i wiringpi-latest.deb
+			# fi  
 
 			colored_echo "Copying setup file..."
 			cp $SOURCE_PATH/$SERVICE_NAME $SERVICE_NAME
