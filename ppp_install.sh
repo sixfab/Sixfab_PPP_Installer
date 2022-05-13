@@ -217,7 +217,7 @@ do
 			colored_echo "Installing WiringPi (gpio tool) if required..."
 			
 			# Check the availability of the gpio.
-			gpio -v 
+			gpio -v > /dev/null 2>&1
 			if [[ $? -ne 0 ]]; then colored_echo "WiringPi not found\n" ${RED} ; fi 
 			
 			# Download WiringPi from https://github.com/WiringPi/WiringPi.git 
