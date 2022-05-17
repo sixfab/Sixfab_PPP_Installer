@@ -40,7 +40,6 @@ function colored_echo
 	echo -e "$COLOR$1 ${SET}"
 }
 
-
 # Check Sixfab path 
 if [[ -e $SIXFAB_PATH ]]; then
     colored_echo "Sixfab path already exist!" ${SET}
@@ -83,29 +82,7 @@ colored_echo "Checking requirements..."
 colored_echo "Updating headers..."
 sudo apt-get update
 
-colored_echo "Installing python3 if it is required..."
-if ! [ -x "$(command -v python3)" ]; then
-  sudo apt-get install python3 -y
-  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-fi
-
-colored_echo "Installing pip3 if it is required..."
-if ! [ -x "$(command -v pip3)" ]; then
-  sudo apt-get install python3-pip -y
-  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-fi
-
-colored_echo "Installing or upgrading atcom if it is required..."
-
-pip3 install -U atcom
-if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-
-source ~/.profile
-if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-
-
-colored_echo "Downloading setup files..."
-
+colored_echo "Downloading chat scripts..."
 wget --no-check-certificate  $SOURCE_PATH/chat-connect -O chat-connect
 if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
@@ -114,18 +91,6 @@ if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
 
 wget --no-check-certificate  $SOURCE_PATH/provider -O provider
 if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
-
-colored_echo "ppp and wiringpi (gpio tool) installing..."
-apt-get install ppp wiringpi -y
-if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-
-# test wiringpi and fix if there is any issue
-gpio readall | grep Oops > /dev/null
-if [[ $? -ne 1 ]]; then 
-	colored_echo "Known wiringpi issue is detected! Wiringpi is updating..."
-	wget https://project-downloads.drogon.net/wiringpi-latest.deb
-	sudo dpkg -i wiringpi-latest.deb
-fi
 
 colored_echo "What is your carrier APN?"
 read carrierapn 
@@ -228,7 +193,50 @@ do
 	colored_echo "You chose $auto_reconnect" ${GREEN} 
 
 	case $auto_reconnect in
-		[Yy]* )    colored_echo "Downloading setup file..."
+		[Yy]* )    
+			colored_echo "Installing python3 if it is required..."
+			if ! [ -x "$(command -v python3)" ]; then
+			  sudo apt install python3 -y
+			  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+			fi
+
+			colored_echo "Installing pip3 if it is required..."
+			if ! [ -x "$(command -v pip3)" ]; then
+			  sudo apt install python3-pip -y
+			  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+			fi
+
+			colored_echo "Installing or upgrading atcom if it is required..."
+
+			pip3 install -U atcom
+			if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+
+			source ~/.profile
+			if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+
+			colored_echo "Installing WiringPi (gpio tool) if required..."
+			
+			# Check the availability of the gpio.
+			gpio -v > /dev/null 2>&1
+			if [[ $? -ne 0 ]]; then colored_echo "WiringPi not found\n" ${RED} ; fi 
+			
+			# Download WiringPi from https://github.com/WiringPi/WiringPi.git 
+			git clone https://github.com/WiringPi/WiringPi.git 
+			
+			# change directory to WiringPi and build from source code
+			pushd WiringPi && ./build && popd
+
+			if [[ $? -ne 0 ]]; then colored_echo "WiringPi installation failed \nTry manual insatallation" ${RED} ; fi
+
+			# # test wiringpi and fix if there is any issue
+			# gpio readall | grep Oops > /dev/null
+			# if [[ $? -ne 1 ]]; then 
+			# 	colored_echo "Known wiringPi issue is detected! WiringPi is updating..."
+			# 	# wget https://project-downloads.drogon.net/wiringpi-latest.deb
+			# 	# sudo dpkg -i wiringpi-latest.deb
+			# fi
+
+			colored_echo "Downloading setup file..."
 			  
 			wget --no-check-certificate $SOURCE_PATH/$SERVICE_NAME
 			if [[ $? -ne 0 ]]; then colored_echo "Download failed" ${RED}; exit 1; fi
