@@ -9,7 +9,6 @@ for i in {1..4}; do
     if [[ $MODEM_CONFIG -eq 0 ]]; then
         break
     fi
-    i=$(($i+1))
     sleep 1
 done
 
